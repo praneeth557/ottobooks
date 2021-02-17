@@ -1,0 +1,43 @@
+<div class="mt-3" *ngIf="savedQuestions.length > 0; else noSavedQuestions">
+    <mat-card class="cm-card" *ngFor="let q of savedQuestions">
+        <div class="row">
+            <div class="col-10">
+                <mat-card-subtitle>{{q.intent_desc}}</mat-card-subtitle>
+                <mat-card-content>
+                    <p *ngIf="!q.isEdit;else editMode">
+                        {{q.answer}}
+                    </p>
+                    <ng-template #editMode>
+                        <mat-form-field appearance="outline" class="col-12">
+                            <input matInput [name]="q.intent_id.toString()" [(ngModel)]="q.answer">
+                        </mat-form-field>
+                    </ng-template>
+                </mat-card-content>
+            </div>
+            <div class="col-2 mt-3 text-right">
+                <button mat-icon-button color="primary" 
+                    *ngIf="!q.isEdit;else saveMode" 
+                    (click)="q.isEdit = true"
+                    #tooltip="matTooltip"
+                    matTooltip="Edit"
+                    matTooltipPosition="above"
+                    matTooltipHideDelay="100">
+                        <mat-icon>edit</mat-icon>
+                </button>
+                <ng-template #saveMode>
+                    <button mat-icon-button color="primary" 
+                        #tooltip="matTooltip"
+                        matTooltip="Save"
+                        matTooltipPosition="above"
+                        matTooltipHideDelay="100"
+                        (click)="q.isEdit = false; onQuestionnaireUpdate(q)">
+                            <mat-icon>save</mat-icon>
+                    </button>
+                </ng-template>
+            </div>
+        </div>
+    </mat-card>
+</div>
+<ng-template #noSavedQuestions>
+    <h3 class="mt-5 text-center"><strong>There are no saved questions at this time!</strong></h3>
+</ng-template>

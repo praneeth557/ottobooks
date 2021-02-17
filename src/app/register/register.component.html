@@ -1,0 +1,70 @@
+<div class="row gradient-primary" style="min-height: 100vh; align-items: center;">
+    <div class="col">
+        <div class="card shadow-lg mb-5 bg-white rounded mb-3" style="width: 27rem; margin: 0px auto;">
+            <div class="card-header text-center cm-text-secondary" style="margin: 1rem 0.75rem 0; font-size: 1.5rem; background: #fff; line-height: 1.5; border-bottom: 0rem;">
+                <span>Create an account</span>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
+                    <div class="row mb-0">
+                        <div class="col s12">
+                          <div class="row mb-0">
+                            <mat-form-field appearance="legacy" class="input-field col s6">
+                                <mat-label>First name</mat-label>
+                                <input matInput id="firstname" ngModel name="firstname" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="legacy" class="input-field col s6">
+                                <mat-label>Last name</mat-label>
+                                <input matInput id="lastname" ngModel name="lastname" required>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row mb-0">
+                        <div class="col s12">
+                          <div class="row mb-0">
+                            <mat-form-field appearance="legacy" class="input-field col s12">
+                                <mat-label>Company</mat-label>
+                                <input matInput id="company" ngModel name="company" required>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row mb-0">
+                        <div class="col s12">
+                          <div class="row mb-0">
+                            <mat-form-field appearance="legacy" class="input-field col s12">
+                                <mat-label>Email</mat-label>
+                                <input matInput type="email" id="email" ngModel name="email" required email>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row mb-0">
+                        <div class="col s12">
+                          <div class="row mb-0">
+                            <mat-form-field appearance="legacy" class="input-field col s6">
+                                <mat-label>Password</mat-label>
+                                <input matInput type="password" id="password" ngModel name="password" required minLength="4">
+                            </mat-form-field>
+                            <mat-form-field appearance="legacy" class="input-field col s6">
+                                <mat-label>Confirm password</mat-label>
+                                <input matInput type="password" id="cpassword" ngModel name="cpassword" required minLength="4">
+                            </mat-form-field>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 1.5rem;">
+                        <div class="input-group">
+                            <button type="submit" class="btn btn-info btn-block"><b>CREATE ACCOUNT</b></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center" style="margin-bottom: 0px;">
+                <label class="cm-text-secondary" for="exampleInputPassword1">Don't have an account?</label>
+                <a href="javascript:void(0)" routerLink="/login" class="text-info cm-link-btn" style="padding-left: 5px; margin-bottom: 0.25rem;">Sign in</a>  
+            </div>
+        </div>
+    </div>
+</div>
