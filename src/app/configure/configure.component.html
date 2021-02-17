@@ -12,10 +12,6 @@
                         <input matInput [name]="config.title" [(ngModel)]="config.title">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-12">
-                        <mat-label>Widget Subtitle</mat-label>
-                        <input matInput [name]="config.subtitle" [(ngModel)]="config.subtitle">
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Initial Greeting</mat-label>
                         <input matInput [name]="config.greeting" [(ngModel)]="config.greeting">
                     </mat-form-field>
@@ -43,7 +39,6 @@
                             &#60;vf-chat-widget
                             &nbsp;&nbsp;&nbsp;&nbsp;accountId&#61;&#34;{{config.accountId}}&#34;
                             &nbsp;&nbsp;&nbsp;&nbsp;title&#61;&#34;{{config.title}}&#34;
-                            &nbsp;&nbsp;&nbsp;&nbsp;subtitle&#61;&#34;{{config.subtitle}}&#34;
                             &nbsp;&nbsp;&nbsp;&nbsp;greeting&#61;&#34;{{config.greeting}}&#34;
                             &nbsp;&nbsp;&nbsp;&nbsp;placeHolder&#61;&#34;{{config.placeholder}}&#34;&#62;
                             &#60;vf-chat-widget&#47;&#62;
@@ -62,7 +57,6 @@
                             &#60;vf-chat-widget
                             &nbsp;&nbsp;&nbsp;&nbsp;accountId&#61;&#34;{{config.accountId}}&#34;
                             &nbsp;&nbsp;&nbsp;&nbsp;title&#61;&#34;{{config.title}}&#34;
-                            &nbsp;&nbsp;&nbsp;&nbsp;subtitle&#61;&#34;{{config.subtitle}}&#34;
                             &nbsp;&nbsp;&nbsp;&nbsp;greeting&#61;&#34;{{config.greeting}}&#34;
                             &nbsp;&nbsp;&nbsp;&nbsp;placeHolder&#61;&#34;{{config.placeholder}}&#34;&#62;
                             &#60;vf-chat-widget&#47;&#62;
@@ -76,7 +70,6 @@
 
 <vf-chat-widget
     [title]="config.title"
-    [subtitle]="config.subtitle"
     [greeting]="config.greeting"
     [primaryColor]="primaryColor"
     [placeHolder]="config.placeholder"
