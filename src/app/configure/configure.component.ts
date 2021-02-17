@@ -14,6 +14,7 @@ export class ConfigureComponent implements OnInit {
   cssScript: string = "http://voicefrontbot.herokuapp.com/main.js";
 
   primaryColor: string = "primary";
+  isChatOpen: boolean = true;
 
   constructor(private configService: ConfigureService, private authorizationService: AuthorizationService) { }
 
