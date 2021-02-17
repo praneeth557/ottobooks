@@ -1,71 +1,75 @@
-
-<div class="row">
-    <div class="col-8">
-        <h4 class="mb-2">Configure your widget</h4>
-        <mat-card class="">
-            <mat-card-title><h5>Widget Customization</h5></mat-card-title>
-            <mat-card-subtitle>Customize your widget just the way you like and copy the below code in your code.</mat-card-subtitle>
-            <mat-card-content>
-                <form class="row mt-4">
-                    <mat-form-field appearance="outline" class="col-12">
-                        <mat-label>Widget Title</mat-label>
-                        <input matInput [name]="config.title" [(ngModel)]="config.title">
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-12">
-                        <mat-label>Initial Greeting</mat-label>
-                        <input matInput [name]="config.greeting" [(ngModel)]="config.greeting">
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-12">
-                        <mat-label>Placeholder</mat-label>
-                        <input matInput [name]="config.placeholder" [(ngModel)]="config.placeholder">
-                    </mat-form-field>
-                </form>
-            </mat-card-content>
-        </mat-card>
-        <mat-card class="mt-5">
-            <mat-card-title><h5>Widget Integration</h5></mat-card-title>
-            <mat-card-subtitle>Follow the below steps to integrate chat widget in your code.</mat-card-subtitle>
-            <mat-card-content>
-                <div>
-                    <h5>Usage in HTML</h5>
-                    <p>First, place the below code inbetween <code>&#60;head&#62; &#60;head&#47;&#62;</code> tags</p>
-                    <pre class="cm-code">
-                        <code><span>&lt;script type="text/javascript" src="http://vf-chat-widget.herokuapp.com/vf-chat-widget.js"&gt;&lt;&#47;script&gt;</span>
-                            <span>&lt;link rel="stylesheet" href="https://vf-chat-widget.herokuapp.com/styles.css"&gt;</span></code>
-                    </pre>
-                    <p>Add <code>&#60;vf-chat-widget&#62;&#60;vf-chat-widget&#47;&#62;</code> in your code.</p>
-                    <pre class="cm-code">
-                        <code>
-                            &#60;vf-chat-widget
-                            &nbsp;&nbsp;&nbsp;&nbsp;account-id&#61;&#34;{{config.accountId}}&#34;
-                            &nbsp;&nbsp;&nbsp;&nbsp;title&#61;&#34;{{config.title}}&#34;
-                            &nbsp;&nbsp;&nbsp;&nbsp;greeting&#61;&#34;{{config.greeting}}&#34;
-                            &nbsp;&nbsp;&nbsp;&nbsp;placeHolder&#61;&#34;{{config.placeholder}}&#34;&#62;
-                            &#60;&#47;vf-chat-widget&#62;
-                        </code>
-                    </pre>
-                </div>
-                <div>
-                    <h5>Usage in Angular 2+</h5>
-                    <p>First, Install <code>vf-chat-widget</code> package from npm</p>
-                    <pre class="cm-code"><code>npm install --save vf-chat-widget</code></pre>
-                    <p>Import chat widget into your module <code>app.module.ts</code></p>
-                    <pre class="cm-code"><code>import &#123; VfChatWidgetModule &#125; from 'vf-chat-widget'&#59;<br>imports&#58; &#91; VfChatWidgetModule &#93;</code></pre>
-                    <p>Add <code>&#60;vf-chat-widget&#62;&#60;vf-chat-widget&#47;&#62;</code> in your component.</p>
-                    <pre class="cm-code">
-                        <code>
-                            &#60;vf-chat-widget
-                            &nbsp;&nbsp;&nbsp;&nbsp;accountId&#61;&#34;{{config.accountId}}&#34;
-                            &nbsp;&nbsp;&nbsp;&nbsp;title&#61;&#34;{{config.title}}&#34;
-                            &nbsp;&nbsp;&nbsp;&nbsp;greeting&#61;&#34;{{config.greeting}}&#34;
-                            &nbsp;&nbsp;&nbsp;&nbsp;placeHolder&#61;&#34;{{config.placeholder}}&#34;&#62;
-                            &#60;&#47;vf-chat-widget&#62;
-                        </code>
-                    </pre>
-                </div>
-            </mat-card-content>
-        </mat-card>
-    </div>
+<div class="configure">
+  <div class="row">
+      <div class="col-12">
+        <h4>Configure your widget</h4>
+        <hr class="mt-0"/>
+      </div>
+      <div class="col-8">
+          <mat-card class="">
+              <mat-card-title><h5>Widget Customization</h5></mat-card-title>
+              <mat-card-subtitle>Customize your widget just the way you like and copy the below code in your code.</mat-card-subtitle>
+              <mat-card-content>
+                  <form class="row mt-4">
+                      <mat-form-field appearance="outline" class="col-12">
+                          <mat-label>Widget Title</mat-label>
+                          <input matInput [name]="config.title" [(ngModel)]="config.title">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="col-12">
+                          <mat-label>Initial Greeting</mat-label>
+                          <input matInput [name]="config.greeting" [(ngModel)]="config.greeting">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="col-12">
+                          <mat-label>Placeholder</mat-label>
+                          <input matInput [name]="config.placeholder" [(ngModel)]="config.placeholder">
+                      </mat-form-field>
+                  </form>
+              </mat-card-content>
+          </mat-card>
+          <mat-card class="mt-5">
+              <mat-card-title><h5>Widget Integration</h5></mat-card-title>
+              <mat-card-subtitle>Follow the below steps to integrate chat widget in your code.</mat-card-subtitle>
+              <mat-card-content>
+                  <div>
+                      <h5>Usage in HTML</h5>
+                      <p>First, place the below code inbetween <code>&#60;head&#62; &#60;head&#47;&#62;</code> tags</p>
+                      <pre class="cm-code">
+                          <code><span>&lt;script type="text/javascript" src="http://vf-chat-widget.herokuapp.com/vf-chat-widget.js"&gt;&lt;&#47;script&gt;</span>
+                              <span>&lt;link rel="stylesheet" href="https://vf-chat-widget.herokuapp.com/styles.css"&gt;</span></code>
+                      </pre>
+                      <p>Add <code>&#60;vf-chat-widget&#62;&#60;vf-chat-widget&#47;&#62;</code> in your code.</p>
+                      <pre class="cm-code">
+                          <code>
+                              &#60;vf-chat-widget
+                              &nbsp;&nbsp;&nbsp;&nbsp;account-id&#61;&#34;{{config.accountId}}&#34;
+                              &nbsp;&nbsp;&nbsp;&nbsp;title&#61;&#34;{{config.title}}&#34;
+                              &nbsp;&nbsp;&nbsp;&nbsp;greeting&#61;&#34;{{config.greeting}}&#34;
+                              &nbsp;&nbsp;&nbsp;&nbsp;placeHolder&#61;&#34;{{config.placeholder}}&#34;&#62;
+                              &#60;&#47;vf-chat-widget&#62;
+                          </code>
+                      </pre>
+                  </div>
+                  <div>
+                      <h5>Usage in Angular 2+</h5>
+                      <p>First, Install <code>vf-chat-widget</code> package from npm</p>
+                      <pre class="cm-code"><code>npm install --save vf-chat-widget</code></pre>
+                      <p>Import chat widget into your module <code>app.module.ts</code></p>
+                      <pre class="cm-code"><code>import &#123; VfChatWidgetModule &#125; from 'vf-chat-widget'&#59;<br>imports&#58; &#91; VfChatWidgetModule &#93;</code></pre>
+                      <p>Add <code>&#60;vf-chat-widget&#62;&#60;vf-chat-widget&#47;&#62;</code> in your component.</p>
+                      <pre class="cm-code">
+                          <code>
+                              &#60;vf-chat-widget
+                              &nbsp;&nbsp;&nbsp;&nbsp;accountId&#61;&#34;{{config.accountId}}&#34;
+                              &nbsp;&nbsp;&nbsp;&nbsp;title&#61;&#34;{{config.title}}&#34;
+                              &nbsp;&nbsp;&nbsp;&nbsp;greeting&#61;&#34;{{config.greeting}}&#34;
+                              &nbsp;&nbsp;&nbsp;&nbsp;placeHolder&#61;&#34;{{config.placeholder}}&#34;&#62;
+                              &#60;&#47;vf-chat-widget&#62;
+                          </code>
+                      </pre>
+                  </div>
+              </mat-card-content>
+          </mat-card>
+      </div>
+  </div>
 </div>
 
 <vf-chat-widget

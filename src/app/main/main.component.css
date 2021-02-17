@@ -28,8 +28,9 @@
 }
 
 .cm-top-nav {
-    position: fixed;
-    width: 16.667%;
+    /* position: fixed; */
+    /* width: 16.667%; */
+
 }
 
 .cm-bottom-nav {
@@ -39,9 +40,11 @@
 
 .cm-nav-link {
     display: block;
-    padding: 0.5rem 2rem;
-    margin: 0.5rem 0;
+    margin: 0;
     color: #bbc0c0;
+    text-align: center;
+    padding: 1.5rem;
+    /* transition: width 2s; */
 }
 
 .cm-top-nav-link {
@@ -52,12 +55,17 @@
 .cm-nav-link:hover {
     color: #fafafa;
     text-decoration: none;
-    /* background: #15a8a1b9; */
     background: #099fa1;
 }
 
+.cm-nav-link.active {
+  color: #fafafa;
+  text-decoration: none;
+  background: #099fa1;
+}
+
 .cm-nav-link .cm-nav-title {
-    padding: 10px;
+    /* padding: 10px; */
     vertical-align: middle;
 }
 
@@ -73,11 +81,25 @@
 }
 
 .cm-brand-nav-link .cm-nav-title {
-    padding: 5px 10px;
+    /* padding: 5px 10px; */
     vertical-align: middle;
 }
 
+.cm-nav-title {
+  display: block;
+  font-size: 12px;
+}
+
 .main-body {
-    padding: 2.5rem;
+    padding: 0;
     overflow-y: scroll;
+    flex: 1;
+}
+
+.max-left-bar {
+  padding: 1rem 0.5rem !important;
+}
+
+.cm-nav-top-title {
+  padding:10px
 }

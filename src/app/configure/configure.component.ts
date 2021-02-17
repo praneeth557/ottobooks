@@ -25,9 +25,7 @@ export class ConfigureComponent implements OnInit {
         this.config.accountId = user.companyId;
       }
       if(user && user.company) {
-        let title = this.config.title;
-        title += " to " + user.company;
-        this.config.title = title;
+        this.config.title = "Welcome to " + user.company;;
       }
     })
   }

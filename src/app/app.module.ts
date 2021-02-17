@@ -19,6 +19,7 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -100,6 +101,7 @@ const routes: Routes = [
     MatTooltipModule,
     MatTabsModule,
     MatCardModule,
+    MatGridListModule,
     VfChatWidgetModule
   ],
   exports: [RouterModule],
