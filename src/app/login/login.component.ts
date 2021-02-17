@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from './../user';
+import { User } from '../user';
 import { AuthorizationService } from '../authorization.service';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';

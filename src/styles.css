@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+
+
+html, body, .root {
+    min-height: 100vh;
+}
+
+.gradient-primary {
+    background-image: -webkit-linear-gradient(top,rgba(35, 171, 184, 0.76),#15a8a1b9);
+    background-image: linear-gradient(to bottom,rgba(35, 171, 184, 0.76), #15a8a1b9);
+    background-color: #3d5557;
+}
+
+.cm-text-sm {
+    font-size: 12px;
+}
+
+.cm-text-secondary {
+    color: #51696b;
+    font-weight: bold;
+}
+
+.cm-link-btn:hover {
+    text-decoration: none;
+}
+
+.cm-card {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    margin-top: 15px;
+}
+
+.cm-code {
+    background-color: #f4f6f6;
+    padding: 10px;
+    display: block;
+    font-family: monospace;
+    white-space: pre-line;
+    margin: 1em 0;
+}
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

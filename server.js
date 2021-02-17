@@ -25,7 +25,7 @@ router.use(cors(options));
 router.options("*", cors(options));
 
 // Create link to Angular build directory
-var distDir = __dirname + "/dist/voicefront";
+var distDir = __dirname + "/dist";
 app.use(express.static(distDir));
 
 app.listen(process.env.PORT || 4200);
@@ -33,7 +33,7 @@ app.listen(process.env.PORT || 4200);
 
 // PathLocationStrategy
 app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname + '/dist/voicefront/index.html'));
+  res.sendFile(path.join(__dirname + '/dist/index.html'));
 });
 
 console.log("Console listening!");
