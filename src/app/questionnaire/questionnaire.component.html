@@ -1,8 +1,8 @@
 <div class="mt-3">
     <form *ngIf="questionList.length > 0; else noPendingQuestions">
-        <h3 class="col-12">
-            <strong>Here are some of the common questions customer might ask:</strong> 
-        </h3> 
+        <h5 class="col-12">
+            Here are some of the common questions customer might ask:
+        </h5>
         <mat-form-field appearance="outline" class="col-12" *ngFor="let q of questionList">
             <mat-label>{{q.intent_desc}}</mat-label>
             <input matInput [name]="q.id" [(ngModel)]="q.answer" (blur)="onQuestionnaireBlur(q); q.isSaving = q.answer ? true : false;" [disabled]="q.isSaving == true">
@@ -10,6 +10,6 @@
         </mat-form-field>
     </form>
     <ng-template #noPendingQuestions>
-        <h3 class="mt-5 text-center"><strong>There are no pending questions at this time!</strong></h3>
+        <h5 class="mt-5 text-center">There are no pending questions at this time!</h5>
     </ng-template>
 </div>

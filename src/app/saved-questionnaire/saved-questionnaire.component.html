@@ -15,8 +15,8 @@
                 </mat-card-content>
             </div>
             <div class="col-2 mt-3 text-right">
-                <button mat-icon-button color="primary" 
-                    *ngIf="!q.isEdit;else saveMode" 
+                <button mat-icon-button color="primary"
+                    *ngIf="!q.isEdit;else saveMode"
                     (click)="q.isEdit = true"
                     #tooltip="matTooltip"
                     matTooltip="Edit"
@@ -25,7 +25,7 @@
                         <mat-icon>edit</mat-icon>
                 </button>
                 <ng-template #saveMode>
-                    <button mat-icon-button color="primary" 
+                    <button mat-icon-button color="primary"
                         #tooltip="matTooltip"
                         matTooltip="Save"
                         matTooltipPosition="above"
@@ -39,5 +39,5 @@
     </mat-card>
 </div>
 <ng-template #noSavedQuestions>
-    <h3 class="mt-5 text-center"><strong>There are no saved questions at this time!</strong></h3>
+    <h5 class="mt-5 text-center">There are no saved questions at this time!</h5>
 </ng-template>

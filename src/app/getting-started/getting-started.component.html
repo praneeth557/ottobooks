@@ -4,12 +4,12 @@
         <ng-template mat-tab-label>
           Domain Questions
         </ng-template>
-    
+
         <div class="row mt-3">
             <div class="col-6 m6">
-                <h3 class="col-12">
-                    <strong>Let's get started</strong> 
-                </h3> 
+                <h5 class="col-12">
+                    Let's get started
+                </h5>
                 <div class="row">
                     <form class="col">
                         <mat-form-field class="col">
@@ -52,12 +52,12 @@
             </div>
         </div>
     </mat-tab>
-  
+
     <mat-tab>
         <ng-template mat-tab-label>
             Saved Questions
         </ng-template>
-  
+
         <div class="row">
             <div class="col-12 m6" *ngIf="selectedTab.value == 2">
                 <app-saved-questionnaire></app-saved-questionnaire>
