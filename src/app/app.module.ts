@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { VfChatWidgetModule } from 'vf-chat-widget';
+import { DatePipe } from '@angular/common';
 
 import { MatInputModule } from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -42,6 +43,7 @@ import { AuthInterceptorService } from './auth-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 import { SavedQuestionnaireComponent } from './saved-questionnaire/saved-questionnaire.component';
+import { ChatDatePipe } from './pipes/chat-date.pipe';
 
 const routes: Routes = [
   { path: '', canActivate: [ AuthGuardService ], component: MainComponent, children: [
@@ -77,7 +79,8 @@ const routes: Routes = [
     BillingComponent,
     ProfileComponent,
     QuestionnaireComponent,
-    SavedQuestionnaireComponent
+    SavedQuestionnaireComponent,
+    ChatDatePipe
   ],
   imports: [
     BrowserModule,
@@ -105,7 +108,7 @@ const routes: Routes = [
     VfChatWidgetModule
   ],
   exports: [RouterModule],
-  providers: [AuthGuardService, AuthorizationService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+  providers: [DatePipe, AuthGuardService, AuthorizationService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,32 @@
-<mat-grid-list cols="5" rowHeight="1:2">
-  <mat-grid-tile [colspan]="'1'">
-    <mat-grid-tile-header>All Coversations</mat-grid-tile-header>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="'3'">
-    <mat-grid-tile-header>XYZ</mat-grid-tile-header>
-  </mat-grid-tile>
-</mat-grid-list>
+<div class="sessions">
+  <div class="left-pane flex-column">
+    <div class="header pb-3">
+      Conversations
+    </div>
+    <div class="body">
+      <mat-selection-list [multiple]="false">
+        <mat-list-option *ngFor="let c of conversations" [value]="c" class="user-list">
+          <div class="user-li">
+            <mat-icon class="user-icon" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
+            <div class="pl-3 flex-column user-right">
+              <span class="user-title">Anonymous User</span>
+
+              <div class="user-right-top">
+                <span class="text-secondary text-truncate last-msg" [title]="c.last_message"><small>{{c.last_message}}</small></span>
+                <span class="user-date text-secondary"><small>{{c.updated_at | chatDate}}</small></span>
+              </div>
+            </div>
+          </div>
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+  </div>
+  <div class="right-pane">
+    <div class="header pb-3">
+      XYZ
+    </div>
+    <div class="body">
+      Body
+    </div>
+  </div>
+</div>
