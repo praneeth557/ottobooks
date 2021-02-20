@@ -8,7 +8,8 @@ export interface Session{
   id: string,
   last_message: string,
   started_at: string,
-  updated_at: string
+  updated_at: string,
+  user_name: string
 }
 
 export const environment = {

@@ -9,7 +9,7 @@
           <div class="user-li">
             <mat-icon class="user-icon" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
             <div class="pl-3 flex-column user-right">
-              <span class="user-title">Anonymous User</span>
+              <span class="user-title">{{c.user_name | titlecase}}</span>
 
               <div class="user-right-top">
                 <span class="text-secondary text-truncate last-msg" [title]="c.last_message"><small>{{c.last_message}}</small></span>
