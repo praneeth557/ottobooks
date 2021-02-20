@@ -5,7 +5,7 @@
     </div>
     <div class="body">
       <mat-selection-list [multiple]="false">
-        <mat-list-option *ngFor="let c of conversations" [value]="c" class="user-list">
+        <mat-list-option *ngFor="let c of conversations" [value]="c" class="user-list" (click)="getSession(c.id)">
           <div class="user-li">
             <mat-icon class="user-icon" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
             <div class="pl-3 flex-column user-right">
@@ -21,12 +21,27 @@
       </mat-selection-list>
     </div>
   </div>
-  <div class="right-pane">
+  <div class="right-pane flex-column">
     <div class="header pb-3">
       XYZ
     </div>
-    <div class="body">
-      Body
+    <div class="body flex-column">
+      <div class="chat-body" #scrollMe>
+        <mat-list>
+          <mat-list-item class="vf-chat-li" *ngFor="let ch of chatList" [ngClass]="(ch.role==0)?'vf-chat-li-left':'vf-chat-li-right'">
+            <div mat-line>
+              <mat-card [ngClass]="(ch.role==0)?'vf-msg-card-left':'vf-msg-card-right'">
+                {{ch.message}}
+              </mat-card>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <div class="chat-footer">
+        <div class="chat-input-area">
+          <textarea type="text" rows="1" placeholder="Type a message"></textarea>
+        </div>
+      </div>
     </div>
   </div>
 </div>

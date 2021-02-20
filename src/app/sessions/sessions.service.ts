@@ -1,6 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Constants } from '../constants';
+import { Manager } from 'socket.io-client';
+import { Observable } from 'rxjs';
+
+export interface Session{
+  id: string,
+  last_message: string,
+  started_at: string,
+  updated_at: string
+}
+
+export const environment = {
+  production: false,
+  SOCKET_ENDPOINT: 'http://ec2-3-17-63-108.us-east-2.compute.amazonaws.com:5000/admin'
+};
 
 @Injectable({
   providedIn: 'root'
@@ -64,13 +78,49 @@ export class SessionsService {
     }
   ]
 
+  socket;
+
   constructor(private httpClient: HttpClient) { }
 
   getConversations() {
     return this.httpClient.get(
       Constants.API_ENDPOINT + 'sessions'
     );
+  }
 
-    //return this.conversations;
+  setupSocketConnection(apiToken, sessionId) {
+    const manager = new Manager(
+      'http://ec2-3-17-63-108.us-east-2.compute.amazonaws.com:5000/admin',
+      {
+        query: {
+          api_token: apiToken,
+          session_id: sessionId
+        }
+      }
+    );
+
+    const socket = manager.socket("/admin");
+
+    // this.socket = io(
+    //   'http://ec2-3-17-63-108.us-east-2.compute.amazonaws.com:5000/admin',
+    //   {
+    //     query: {
+    //       api_token: apiToken,
+    //       session_id: sessionId
+    //     }
+    //   }
+    // )
+  }
+
+  sendMsg(msg) {
+    this.socket.emit('message', msg);
+  }
+
+  onNewMessage() {
+    return Observable.create(observer => {
+      this.socket.on('message', msg => {
+        observer.next(msg);
+      });
+    });
   }
 }

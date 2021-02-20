@@ -12,6 +12,7 @@
 
 .right-pane {
   flex:1;
+  display: flex;
 }
 
 .left-pane .header, .right-pane .header {
@@ -43,10 +44,10 @@
 
 .user-icon {
   border: 1px solid #bbc0c0;
-  width: 60px;
-  height: 60px;
-  font-size: 50px;
-  padding: 5px;
+  width: 50px;
+  height: 50px;
+  font-size: 40px;
+  padding: 5px 4px;
   border-radius: 50%;
   color: #bbc0c0;
 }
@@ -66,4 +67,47 @@
 
 .last-msg {
   max-width: 8rem;
+}
+
+.user-list .mat-list-item-content .mat-list-text{
+  padding-right: 0 !important;
+}
+
+.right-pane .body{
+  display: flex;
+  flex: 1;
+}
+
+.right-pane .body .chat-body {
+  flex: 1;
+}
+
+.right-pane .body .chat-footer {
+  margin: 0;
+  display: flex;
+  padding: 0.5rem 2rem;
+  border-top: 1px solid rgb(230, 230, 230);
+}
+
+.right-pane .body .chat-footer .chat-input-area {
+  flex: 1;
+}
+
+.chat-input-area textarea {
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0.6rem 1rem;
+  border: none;
+  box-sizing: border-box;
+  display: block;
+  line-height: inherit;
+  appearance: none;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: medium;
+  box-shadow: none;
+  resize: none;
+  outline: 0;
+  border-radius: 2rem;
+  background-color: #eeeeee;
 }

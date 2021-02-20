@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionsService } from './sessions.service';
+import { AuthorizationService } from '../authorization.service';
+import { Session, SessionsService } from './sessions.service';
 
 @Component({
   selector: 'app-sessions',
@@ -8,15 +9,35 @@ import { SessionsService } from './sessions.service';
 })
 export class SessionsComponent implements OnInit {
 
-  conversations: Array<object> = [];
+  conversations: Array<Session> = [];
+  token: string;
+  chatList: Array<object> = [];
 
-  constructor(private sessionsService: SessionsService) { }
+  constructor(
+    private sessionsService: SessionsService,
+    private authorizationService: AuthorizationService
+  ) { }
 
   ngOnInit(): void {
-    this.sessionsService.getConversations().subscribe((conversations: any) => {
+    this.sessionsService.getConversations().subscribe((conversations: Array<Session>) => {
       this.conversations = conversations;
+      this.authorizationService.user.subscribe(user => {
+        if(user && user.token) this.token = user.token;
+        if(this.conversations && this.conversations.length) {
+          let selectedSession: string = this.conversations[0].id;
+          this.getSession(selectedSession);
+        }
+      });
     });
-    //this.conversations = this.sessionsService.getConversations()
+  }
+
+  getSession(id: string) {
+    this.sessionsService.setupSocketConnection(this.token, id);
+    let _this = this;
+    this.sessionsService.onNewMessage().subscribe(msg => {
+      _this.chatList.push(msg);
+      console.log(msg);
+    });
   }
 
 }
