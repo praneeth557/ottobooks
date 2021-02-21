@@ -5,7 +5,7 @@
     </div>
     <div class="body">
       <mat-selection-list [multiple]="false">
-        <mat-list-option *ngFor="let c of conversations" [value]="c" class="user-list" (click)="getSession(c.id)">
+        <mat-list-option *ngFor="let c of conversations" [value]="c" class="user-list" (click)="getSession(c)">
           <div class="user-li">
             <mat-icon class="user-icon" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
             <div class="pl-3 flex-column user-right">
@@ -23,14 +23,14 @@
   </div>
   <div class="right-pane flex-column">
     <div class="header pb-3">
-      XYZ
+      {{selectedSession.user_name}}
     </div>
     <div class="body flex-column">
       <div class="chat-body" #scrollMe>
         <mat-list>
-          <mat-list-item class="vf-chat-li" *ngFor="let ch of chatList" [ngClass]="(ch.role==0)?'vf-chat-li-left':'vf-chat-li-right'">
+          <mat-list-item class="vf-chat-li" *ngFor="let ch of chatList" [ngClass]="(ch.sender_type=='User')?'vf-chat-li-left':'vf-chat-li-right'">
             <div mat-line>
-              <mat-card [ngClass]="(ch.role==0)?'vf-msg-card-left':'vf-msg-card-right'">
+              <mat-card [ngClass]="(ch.sender_type=='User')?'vf-msg-card-left':'vf-msg-card-right'">
                 {{ch.message}}
               </mat-card>
             </div>
@@ -39,7 +39,7 @@
       </div>
       <div class="chat-footer">
         <div class="chat-input-area">
-          <textarea type="text" rows="1" placeholder="Type a message"></textarea>
+          <textarea type="text" rows="1" placeholder="Type a message" [(ngModel)]="adminMsg" (keydown.enter)="sendMessage($event)"></textarea>
         </div>
       </div>
     </div>

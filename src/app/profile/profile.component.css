@@ -1,3 +1,9 @@
+:host {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
 .accountId {
     border: 1px solid #dbdbdb;
     background-color: #fafafa;
@@ -9,4 +15,12 @@
 
 .profile {
   padding: 1.5rem;
+  display: flex;
+  flex: 1;
+  overflow: auto;
+  flex-direction: column;
+}
+
+.title {
+  border-bottom: #eee;
 }

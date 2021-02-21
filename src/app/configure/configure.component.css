@@ -1,3 +1,10 @@
+:host {
+  width: 100%;
+  display: flex;
+}
+
 .configure {
   padding: 1.5rem;
+  flex: 1;
+  overflow: auto;
 }

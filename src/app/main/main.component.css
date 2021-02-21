@@ -1,11 +1,25 @@
+/* :host {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
 .main {
-    min-height: 100vh;
     display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.main-bottom {
+  flex: 1;
+  overflow: hidden;
 }
 
 .cm-navbar {
     padding: 0 0 3.5rem 0 !important;
     align-items: flex-start;
+    display: flex;
+    overflow: hidden;
 }
 
 .cm-brand-nav {
@@ -38,6 +52,10 @@
     color: #bbc0c0;
     padding: 1.25rem 2rem 1.25rem 1rem;
 }
+.cm-top-nav {
+  flex: 1;
+  overflow: auto;
+}
 
 .cm-top-nav-link {
     padding: 1rem;
@@ -47,14 +65,12 @@
 .cm-nav-link:hover {
     color: #fafafa;
     text-decoration: none;
-    /* background: #099fa1; */
     background-color: #343535;
 }
 
 .cm-nav-link.active {
   color: #fafafa;
   text-decoration: none;
-  /* background: #099fa1; */
   background-color: #343535;
 }
 
@@ -83,8 +99,8 @@
 
 .main-body {
     padding: 0;
-    overflow-y: scroll;
     flex: 1;
+    display: flex;
 }
 
 .max-left-bar {
@@ -97,4 +113,96 @@
 
 .cm-top-nav-icon {
   margin-bottom: 5px;
+} */
+
+:host {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.aside {
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.cm-brand-logo {
+  color: #fafafa;
+  text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.cm-brand-nav-link {
+  display: block;
+  padding: 0 0.5rem;
+  color: #dbdfdf !important;
+}
+
+.cm-brand-nav-link:hover {
+  color: #fafafa !important;
+  text-decoration: none;
+}
+
+.cm-brand-nav-link .cm-nav-title {
+  vertical-align: middle;
+}
+
+.cm-top-nav-icon {
+  margin-bottom: 5px;
+}
+
+.cm-nav-top-title {
+  padding:10px 5px;
+}
+
+.cm-top-nav {
+  overflow: auto;
+  flex: 1;
+}
+
+.cm-nav-link {
+  display: block;
+  margin: 0;
+  color: #bbc0c0;
+  padding: 1.25rem 2rem 1.25rem 1rem;
+}
+
+.cm-nav-link:hover {
+  color: #fafafa;
+  text-decoration: none;
+  background-color: #343535;
+}
+
+.cm-nav-link.active {
+color: #fafafa;
+text-decoration: none;
+background-color: #343535;
+}
+
+.cm-nav-link .cm-nav-title {
+  vertical-align: middle;
+}
+
+.cm-nav-title {
+  padding-left: 10px;
 }

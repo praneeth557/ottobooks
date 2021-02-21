@@ -1,2 +1,11 @@
+:host {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
 
-
+.root {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}

@@ -1,0 +1,8 @@
+:host {
+  width: 100%;
+  display: flex;
+}
+
+.gs-tabs {
+  flex: 1;
+}
