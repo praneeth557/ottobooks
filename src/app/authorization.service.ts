@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { User, ISignUp, ISignIn } from './user';
 import { Constants } from './constants';
 import {  Observable, BehaviorSubject } from 'rxjs';
-import {catchError, tap} from 'rxjs/operators'; 
+import {catchError, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +18,14 @@ export class AuthorizationService {
 
   createUser(signupReq: ISignUp) {
     return this.http.post(
-      Constants.API_ENDPOINT + 'signup', 
+      Constants.API_ENDPOINT + 'signup',
       signupReq
     );
   }
 
   validateUser(signinReq: ISignIn) {
     return this.http.post(
-      Constants.API_ENDPOINT + 'signin', 
+      Constants.API_ENDPOINT + 'signin',
       signinReq
     ).pipe(
       catchError((error, caught) => {
@@ -43,7 +43,7 @@ export class AuthorizationService {
           _tokenExpirationDate: new Date(new Date().getTime() + 3000 * 1000),
           domain: resData.domain,
           subdomain: resData.subdomain
-        } 
+        }
         this.handleAuthentication(userResData);
       })
     );
@@ -88,7 +88,7 @@ export class AuthorizationService {
       return;
     }
     const parsedData = JSON.parse(userData);
-    
+
     const loadedUser = new User(parsedData.firstname, parsedData.lastname, parsedData.email, parsedData.company, parsedData.companyId, parsedData.userId, parsedData._token, new Date(parsedData._tokenExpirationDate), parsedData.domain, parsedData.subdomain);
     if(loadedUser.token) {
       this.user.next(loadedUser);

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Constants } from '../constants';
 import { io, Manager } from 'socket.io-client';
 import { Observable } from 'rxjs';
+import * as Rx from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface Session{
   id: string,
@@ -17,7 +19,8 @@ export interface Session{
 })
 export class SessionsService {
 
-  socket;
+  private socket;
+  messages: Rx.Subject<any>;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -27,8 +30,7 @@ export class SessionsService {
     );
   }
 
-  setupSocketConnection(apiToken, sessionId) {
-
+  connect(apiToken, sessionId): Rx.Subject<MessageEvent> {
     const manager = new Manager(Constants.API_ENDPOINT, {
       reconnectionDelayMax: 10000,
       query: {
@@ -37,17 +39,48 @@ export class SessionsService {
       }
     });
     this.socket = manager.socket("/admin");
+
+    let observable = new Observable(observer => {
+      this.socket.on('message', msg => {
+        observer.next(msg);
+      })
+      return () => {
+        this.socket.disconnect();
+      }
+    })
+
+    let observer = {
+      next: (data: Object) => {
+        this.socket.emit('message', data);
+      }
+    }
+
+    return Rx.Subject.create(observer, observable);
+  }
+
+  setupSocketConnection(apiToken, sessionId) {
+    this.messages = <Rx.Subject<any>>this
+      .connect(apiToken, sessionId)
+      .pipe(
+        map((response: any): any => {
+          return response;
+        })
+      );
   }
 
   sendMsg(msg) {
-    this.socket.emit('message', msg);
+    this.messages.next(msg);
   }
 
-  onNewMessage() {
-    return Observable.create(observer => {
-      this.socket.on('message', msg => {
-        observer.next(msg);
-      });
-    });
+  switchMode(type) {
+    this.socket.emit('switch', type);
   }
+
+  // onNewMessage() {
+  //   return Observable.create(observer => {
+  //     this.socket.on('message', msg => {
+  //       observer.next(msg);
+  //     });
+  //   });
+  // }
 }

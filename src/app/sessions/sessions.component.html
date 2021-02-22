@@ -1,11 +1,13 @@
 <div class="sessions">
   <div class="left-pane flex-column">
-    <div class="header pb-3">
-      Conversations
+    <div class="header">
+      <div class="search">
+        <textarea type="text" rows="1" placeholder="Search"></textarea>
+      </div>
     </div>
     <div class="body">
       <mat-selection-list [multiple]="false">
-        <mat-list-option *ngFor="let c of conversations" [value]="c" class="user-list" (click)="getSession(c)">
+        <mat-list-option *ngFor="let c of conversations" [value]="c" class="user-list" (click)="getSession(c)" [ngClass]="getMatListClasses(c.id)">
           <div class="user-li">
             <mat-icon class="user-icon" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
             <div class="pl-3 flex-column user-right">
@@ -22,22 +24,30 @@
     </div>
   </div>
   <div class="right-pane flex-column">
-    <div class="header pb-3">
-      {{selectedSession.user_name}}
+    <div class="header">
+      <mat-icon class="user-icon-right" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
+      <span class="user-name-right">{{selectedSession.user_name}}</span>
+      <div class="enable-chat">
+        <button mat-stroked-button color="primary" *ngIf="!isEnableAdmin;else disableTemplate" (click)="isEnableAdmin = true; enableAdmin(selectedSession, 'admin')">Enable admin chat</button>
+        <ng-template #disableTemplate>
+          <button mat-stroked-button color="warn" (click)="isEnableAdmin = false; enableAdmin(selectedSession, 'bot')">Disable admin chat</button>
+        </ng-template>
+      </div>
     </div>
     <div class="body flex-column">
       <div class="chat-body" #scrollMe>
         <mat-list>
           <mat-list-item class="vf-chat-li" *ngFor="let ch of chatList" [ngClass]="(ch.sender_type=='User')?'vf-chat-li-left':'vf-chat-li-right'">
             <div mat-line>
-              <mat-card [ngClass]="(ch.sender_type=='User')?'vf-msg-card-left':'vf-msg-card-right'">
+              <mat-card
+                [ngClass]="calculateClasses(ch)">
                 {{ch.message}}
               </mat-card>
             </div>
           </mat-list-item>
         </mat-list>
       </div>
-      <div class="chat-footer">
+      <div class="chat-footer" *ngIf="isEnableAdmin">
         <div class="chat-input-area">
           <textarea type="text" rows="1" placeholder="Type a message" [(ngModel)]="adminMsg" (keydown.enter)="sendMessage($event)"></textarea>
         </div>

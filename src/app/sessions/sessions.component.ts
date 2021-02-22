@@ -20,6 +20,7 @@ export class SessionsComponent implements OnInit {
     started_at: '',
     updated_at: ''
   };
+  isEnableAdmin: boolean = false;
 
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
@@ -56,7 +57,7 @@ export class SessionsComponent implements OnInit {
     this.chatList = [];
     this.selectedSession = selectedSession;
     this.sessionsService.setupSocketConnection(this.token, selectedSession.id);
-    this.sessionsService.onNewMessage().subscribe(msg => {
+    this.sessionsService.messages.subscribe(msg => {
       _this.chatList.push(...msg);
       console.log(msg);
     });
@@ -66,7 +67,30 @@ export class SessionsComponent implements OnInit {
     event.preventDefault();
     if(this.adminMsg && this.adminMsg.length) {
       this.sessionsService.sendMsg(this.adminMsg);
+      let param = {
+        message: this.adminMsg,
+        sender_type: "Admin"
+      }
+      this.chatList.push(param);
       this.adminMsg = '';
+    }
+  }
+
+  enableAdmin(selectedSession, type) {
+    this.sessionsService.switchMode(type);
+  }
+
+  calculateClasses(ch) {
+    return {
+        'vf-msg-card-left': ch.sender_type == 'User',
+        'vf-msg-card-right': ch.sender_type != 'User',
+        'admin-card': ch.sender_type == 'Admin'
+    };
+  }
+
+  getMatListClasses(id) {
+    return {
+      'mat-list-single-selected-option': id === this.selectedSession.id
     }
   }
 
