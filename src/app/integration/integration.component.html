@@ -1,1 +1,24 @@
-<p>Integration works!</p>
+<mat-tab-group mat-stretch-tabs class="integration-tabs">
+  <mat-tab label="Integrations" class="integration-tab">
+    <div class="integration">
+      <div class="it-card">
+        <div class="it-img">
+          <img class="it-image" mat-card-image src="./../../assets/shopify-logo.png" alt="Shopify">
+        </div>
+        <div class="it-footer">
+          <mat-form-field appearance="outline" class="store-input">
+            <mat-label>Store Name</mat-label>
+            <input matInput [(ngModel)]="shopifyStore" (keydown.enter)="shopifyIntegrate()">
+            <button mat-icon-button matSuffix (click)="shopifyIntegrate()">
+              <mat-icon color="primary">send</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="My Apps" class="my-apps-tab">
+
+  </mat-tab>
+</mat-tab-group>

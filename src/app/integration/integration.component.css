@@ -2,3 +2,34 @@
   width: 100%;
   display: flex;
 }
+
+.integration-tabs {
+  width: 100%;
+}
+
+.integration {
+  width: 100%;
+  display: flex;
+  padding: 1rem 2rem !important;
+}
+
+.it-card {
+  height: fit-content;
+  width: fit-content;
+  border: 1px solid #dbdbdb;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.it-image {
+  max-width: 18rem;
+  padding: 0 1rem;
+}
+
+.it-footer {
+  background-color: rgb(243, 242, 242);
+  padding: 1rem 1rem 0 1rem;
+}
+
+.store-input {
+  width: 100%;
+}

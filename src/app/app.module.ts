@@ -44,6 +44,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 import { SavedQuestionnaireComponent } from './saved-questionnaire/saved-questionnaire.component';
 import { ChatDatePipe } from './pipes/chat-date.pipe';
+import { EmptyComponent } from './empty/empty.component';
 
 const routes: Routes = [
   { path: '', canActivate: [ AuthGuardService ], component: MainComponent, children: [
@@ -55,11 +56,12 @@ const routes: Routes = [
     { path: 'performance', canActivate: [ AuthGuardService ], component: AnalyticsComponent },
     { path: 'integration', canActivate: [ AuthGuardService ], component: IntegrationComponent },
     // { path: 'billing', canActivate: [ AuthGuardService ], component: BillingComponent },
-    { path: 'profile', canActivate: [ AuthGuardService ], component: ProfileComponent },
+    { path: 'profile', canActivate: [ AuthGuardService ], component: ProfileComponent }
   ] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'page-not-found', component: PageNotFoundComponent },
+  { path: 'shopify/redirect', canActivate: [ AuthGuardService ], component: EmptyComponent },
   { path: '**', redirectTo: 'page-not-found' }
 ];
 
@@ -80,7 +82,8 @@ const routes: Routes = [
     ProfileComponent,
     QuestionnaireComponent,
     SavedQuestionnaireComponent,
-    ChatDatePipe
+    ChatDatePipe,
+    EmptyComponent
   ],
   imports: [
     BrowserModule,
