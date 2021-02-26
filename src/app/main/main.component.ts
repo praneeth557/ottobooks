@@ -1,31 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../authorization.service';
 import { Router } from '@angular/router';
-import { animate, animation, state, style, transition, trigger } from '@angular/animations';
+import { animate, animation, keyframes, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-main',
-  animations: [
-    trigger('expandCollapse', [
-      state(
-        'expand',
-        style({
-          opacity: 1
-        })
-      ),
-      state(
-        'collapse',
-        style({
-          width: '50px',
-          opacity: 0
-        })
-      ),
-      transition('expand => collapse', [animate('500ms linear')]),
-      transition('collapse => expand', [animate('300ms linear')])
-    ])
-  ],
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  styleUrls: ['./main.component.css'],
+  animations: [
+    trigger(
+      'inOutAnimation',
+      [
+        transition(
+          ':enter',
+          [
+            animate(200, keyframes(
+              [
+               style({ height:0, opacity: 0 }),
+               style({ height: "fit-content", opacity: 1 })
+              ])
+            )
+          ]
+        ),
+        transition(
+          ':leave',
+          [
+            style({ height: "fit-content", opacity: 1 }),
+            animate(200, keyframes(
+              [
+               style({ height: "fit-content", opacity: 1 }),
+               style({ height: 0, opacity: 0 })
+              ])
+            )
+          ]
+        )
+      ]
+    )
+  ]
 })
 export class MainComponent implements OnInit {
 

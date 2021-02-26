@@ -215,6 +215,13 @@ background-color: #343535;
   color: #bbc0c0;
 }
 
+.gettingExpand mat-icon {
+  height: 18px;
+  width: 18px;
+  font-size: 18px;
+  vertical-align: middle;
+}
+
 .cm-nav-link.active .gettingExpand {
   color: #fafafa;
 }
