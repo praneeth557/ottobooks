@@ -206,3 +206,15 @@ background-color: #343535;
 .cm-nav-title {
   padding-left: 10px;
 }
+
+.getting-started-nav {
+  display: flex;
+}
+
+.gettingExpand {
+  color: #bbc0c0;
+}
+
+.cm-nav-link.active .gettingExpand {
+  color: #fafafa;
+}

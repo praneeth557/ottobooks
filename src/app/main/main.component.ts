@@ -30,12 +30,13 @@ import { animate, animation, state, style, transition, trigger } from '@angular/
 export class MainComponent implements OnInit {
 
   isNavExpanded: boolean = false;
+  isGettingStartedToggle: boolean = true;
 
   constructor(private authorizationService: AuthorizationService, private router: Router) { }
 
   ngOnInit(): void {
     if(this.router.url === '/') {
-      this.router.navigate(['/getting-started']);
+      this.router.navigate(['/getting-started/domain']);
     }
   }
 

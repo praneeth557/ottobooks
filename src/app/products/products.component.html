@@ -1,0 +1,39 @@
+<div class="products mt-3 d-flex flex-column flex-fill">
+  <div class="product d-flex ml-4 mr-4 mb-3 mt-2 p-3" *ngFor="let product of products">
+    <div class="left-pane">
+      <div class="product-preview">
+        <div class="product-img d-flex flex-column">
+          <!-- <img class="product-image" mat-card-image src="./../../assets/shopify-logo.png" alt="No Image"> -->
+          <img class="product-image" *ngIf="product.product_image && product.product_image != '';else ngimage" mat-card-image src="./../../assets/shopify-logo.png" alt="No Image">
+          <ng-template #ngimage>
+            <div class="no-image d-flex flex-column flex-fill align-items-center justify-content-center">
+              <mat-icon class="no-img">image</mat-icon>
+              <span class="no-img-text">No image</span>
+            </div>
+          </ng-template>
+        </div>
+        <div class="content p-3 d-flex flex-column">
+          <span class="product-title">{{product.product_title}}</span>
+          <div class="product-other-details d-flex mt-3 text-secondary">
+            <span>Product SKU</span>
+            <span class="flex-fill text-right">{{product.product_sku}}</span>
+          </div>
+          <div class="product-other-details d-flex mt-1 text-secondary">
+            <span>Product ID</span>
+            <span class="flex-fill text-right">{{product.product_id}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right-pane d-flex flex-column">
+      <mat-tab-group mat-stretch-tabs class="flex-fill right-tabs">
+        <mat-tab label="Pending Questions">
+          <div class="p-3">Pending Questions</div>
+        </mat-tab>
+        <mat-tab label="Saved Questions">
+          <div class="p-3">Saved Questions</div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

@@ -45,11 +45,13 @@ import { QuestionnaireComponent } from './questionnaire/questionnaire.component'
 import { SavedQuestionnaireComponent } from './saved-questionnaire/saved-questionnaire.component';
 import { ChatDatePipe } from './pipes/chat-date.pipe';
 import { EmptyComponent } from './empty/empty.component';
+import { ProductsComponent } from './products/products.component';
 
 const routes: Routes = [
   { path: '', canActivate: [ AuthGuardService ], component: MainComponent, children: [
     { path: 'dashboard', canActivate: [ AuthGuardService ], component: DashboardComponent },
-    { path: 'getting-started', canActivate: [ AuthGuardService ], component: GettingStartedComponent },
+    { path: 'getting-started/domain', canActivate: [ AuthGuardService ], component: GettingStartedComponent },
+    { path: 'getting-started/products', canActivate: [ AuthGuardService ], component: ProductsComponent },
     { path: 'configure', canActivate: [ AuthGuardService ], component: ConfigureComponent },
     { path: 'inbox', canActivate: [ AuthGuardService ], component: InboxComponent },
     { path: 'sessions', canActivate: [ AuthGuardService ], component: SessionsComponent },
@@ -83,7 +85,8 @@ const routes: Routes = [
     QuestionnaireComponent,
     SavedQuestionnaireComponent,
     ChatDatePipe,
-    EmptyComponent
+    EmptyComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
