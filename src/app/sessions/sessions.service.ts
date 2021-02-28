@@ -75,12 +75,4 @@ export class SessionsService {
   switchMode(type) {
     this.socket.emit('switch', type);
   }
-
-  // onNewMessage() {
-  //   return Observable.create(observer => {
-  //     this.socket.on('message', msg => {
-  //       observer.next(msg);
-  //     });
-  //   });
-  // }
 }

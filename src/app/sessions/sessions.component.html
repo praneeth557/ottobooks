@@ -1,13 +1,13 @@
-<div class="sessions">
+<div class="sessions" *ngIf="conversations && conversations.length > 0;else nosessions">
   <div class="left-pane flex-column">
     <div class="header">
       <div class="search">
-        <textarea type="text" rows="1" placeholder="Search"></textarea>
+        <textarea type="text" rows="1" placeholder="Search" [(ngModel)]="sessionsFilter"></textarea>
       </div>
     </div>
     <div class="body">
       <mat-selection-list [multiple]="false">
-        <mat-list-option *ngFor="let c of conversations" [value]="c" class="user-list" (click)="getSession(c)" [ngClass]="getMatListClasses(c.id)">
+        <mat-list-option *ngFor="let c of conversations | sessions:sessionsFilter:'user_name' | orderbyDate:'updated_at'" [value]="c" class="user-list" (click)="getSession(c)" [ngClass]="getMatListClasses(c.id)">
           <div class="user-li">
             <mat-icon class="user-icon" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
             <div class="pl-3 flex-column user-right">
@@ -27,7 +27,7 @@
     <div class="header">
       <mat-icon class="user-icon-right" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
       <span class="user-name-right">{{selectedSession.user_name}}</span>
-      <div class="enable-chat">
+      <div class="enable-chat" *ngIf="chatList && chatList.length > 0">
         <button mat-stroked-button color="primary" *ngIf="!isEnableAdmin;else disableTemplate" (click)="isEnableAdmin = true; enableAdmin(selectedSession, 'admin')">Enable admin chat</button>
         <ng-template #disableTemplate>
           <button mat-stroked-button color="warn" (click)="isEnableAdmin = false; enableAdmin(selectedSession, 'bot')">Disable admin chat</button>
@@ -55,3 +55,9 @@
     </div>
   </div>
 </div>
+
+<ng-template #nosessions>
+  <div class="sessions text-center">
+    <h6 class="flex-fill text-center pt-5">No sessions at this time!</h6>
+  </div>
+</ng-template>

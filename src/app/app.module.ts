@@ -46,6 +46,8 @@ import { SavedQuestionnaireComponent } from './saved-questionnaire/saved-questio
 import { ChatDatePipe } from './pipes/chat-date.pipe';
 import { EmptyComponent } from './empty/empty.component';
 import { ProductsComponent } from './products/products.component';
+import { SessionsPipe } from './pipes/sessions.pipe';
+import { OrderbyDatePipe } from './pipes/orderby-date.pipe';
 
 const routes: Routes = [
   { path: '', canActivate: [ AuthGuardService ], component: MainComponent, children: [
@@ -86,7 +88,9 @@ const routes: Routes = [
     SavedQuestionnaireComponent,
     ChatDatePipe,
     EmptyComponent,
-    ProductsComponent
+    ProductsComponent,
+    SessionsPipe,
+    OrderbyDatePipe
   ],
   imports: [
     BrowserModule,

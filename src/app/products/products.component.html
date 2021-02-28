@@ -1,4 +1,4 @@
-<div class="products mt-3 d-flex flex-column flex-fill">
+<div class="products mt-3 d-flex flex-column flex-fill" *ngIf="products && products.length > 0;else noproducts">
   <div class="product d-flex ml-4 mr-4 mb-3 mt-2 p-3" *ngFor="let product of products">
     <div class="left-pane">
       <div class="product-preview">
@@ -37,3 +37,9 @@
     </div>
   </div>
 </div>
+
+<ng-template #noproducts>
+  <div class="sessions text-center flex-fill">
+    <h6 class="flex-fill text-center pt-5">No products at this time!</h6>
+  </div>
+</ng-template>
