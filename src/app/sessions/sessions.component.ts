@@ -10,6 +10,7 @@ import { Session, SessionsService } from './sessions.service';
 })
 export class SessionsComponent implements OnInit {
 
+  isMessageView: boolean = false;
   conversations: Array<Session> = [];
   token: string;
   chatList: Array<object> = [];
@@ -75,7 +76,7 @@ export class SessionsComponent implements OnInit {
     });
     _this.chatList = [];
     this.sessionsService.onNewMessage().subscribe(messages => {
-        console.log(messages);
+      _this.selectedSession = session;
       _this.chatList.push(...messages);
     });
   }

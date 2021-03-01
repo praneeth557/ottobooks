@@ -11,7 +11,7 @@
 }
 
 .left-pane {
-  flex: 0 0 25%;
+  flex: 0 0 30%;
   display: flex;
   overflow: hidden;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
@@ -210,4 +210,51 @@
 
 .admin-card {
   background-color: rgb(19, 94, 129) !important;
+}
+
+.back-conv {
+  display: none;
+  width: 0;
+}
+
+.back-btn {
+  min-width: fit-content;
+}
+
+
+/**************************************************************
+******************* RESPONSIVE DESIGN *************************
+***************************************************************/
+@media screen and (max-width: 992px) {
+  .left-pane {
+    flex: 0 0 40%;
+  }
+
+  .last-msg {
+    max-width: 6rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .left-pane, .right-pane {
+    display: none;
+  }
+
+  .conv-view, .message-view {
+    display: flex;
+    flex: 0 0 100%;
+  }
+
+  .back-conv {
+    display: inline;
+  }
+
+  .last-msg {
+    max-width: 8rem;
+  }
+
+  .back-btn {
+    min-width: fit-content;
+  }
+
 }
