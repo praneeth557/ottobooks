@@ -41,7 +41,8 @@ import { animate, animation, keyframes, state, style, transition, trigger } from
 export class MainComponent implements OnInit {
 
   isNavExpanded: boolean = false;
-  isGettingStartedToggle: boolean = true;
+  isGettingStartedToggle: boolean = false;
+  isToggle: boolean = false;
 
   constructor(private authorizationService: AuthorizationService, private router: Router) { }
 

@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthorizationService } from '../authorization.service';
 import { Session, SessionsService } from './sessions.service';
 
@@ -16,7 +17,7 @@ export class SessionsComponent implements OnInit {
   selectedSession: Session = {
     user_name: '',
     id: '',
-    last_message: '',
+    last_message: {message: '',sent_at: '',sender_type: ''},
     started_at: '',
     updated_at: ''
   };
@@ -36,43 +37,54 @@ export class SessionsComponent implements OnInit {
 
   constructor(
     private sessionsService: SessionsService,
-    private authorizationService: AuthorizationService
+    private authorizationService: AuthorizationService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.sessionsService.getConversations().subscribe((conversations: Array<Session>) => {
-      this.conversations = conversations;
-      this.authorizationService.user.subscribe(user => {
-        if(user && user.token) this.token = user.token;
-        if(this.conversations && this.conversations.length) {
-          let selectedSession: Session = this.conversations[0];
-          this.getSession(selectedSession);
-        }
-      });
+    this.authorizationService.user.subscribe(user => {
+      if(user && user.token) {
+        this.token = user.token;
+        this.getSessions();
+      } else {
+        this.router.navigate(['/login']);
+      }
     });
   }
 
-  getSession(selectedSession: Session) {
+  getSessions(event?: Session) {
     let _this = this;
     this.chatList = [];
-    this.selectedSession = selectedSession;
-    this.sessionsService.setupSocketConnection(this.token, selectedSession.id);
-    this.sessionsService.messages.subscribe(msg => {
-      _this.chatList.push(...msg);
-      console.log(msg);
+    let sessionReq: any = {};
+    this.sessionsService.setupSocketConnection(this.token);
+    if(event && event.id) {
+      sessionReq.session_id = event.id;
+    }
+    this.sessionsService.getSessions(sessionReq);
+    this.sessionsService.sessions.subscribe(sessions => {
+      if(sessions && sessions.length) {
+        _this.conversations.push(...sessions);
+      }
+    });
+  }
+
+  getSession(session: Session) {
+    let _this = this;
+    this.sessionsService.sendMsg({
+      session_id: session.id
+    });
+    _this.chatList = [];
+    this.sessionsService.onNewMessage().subscribe(messages => {
+        console.log(messages);
+      _this.chatList.push(...messages);
     });
   }
 
   sendMessage(event) {
+    let _this = this;
     event.preventDefault();
     if(this.adminMsg && this.adminMsg.length) {
-      this.sessionsService.sendMsg(this.adminMsg);
-      let param = {
-        message: this.adminMsg,
-        sender_type: "Admin"
-      }
-      this.chatList.push(param);
-      this.adminMsg = '';
+
     }
   }
 

@@ -14,7 +14,7 @@
               <span class="user-title">{{c.user_name | titlecase}}</span>
 
               <div class="user-right-top">
-                <span class="text-secondary text-truncate last-msg" [title]="c.last_message"><small>{{c.last_message}}</small></span>
+                <span class="text-secondary text-truncate last-msg" [title]="c.last_message.message" [hidden]="c.last_message.message == ''"><small>{{c.last_message.sender_type}}: {{c.last_message.message}}</small></span>
                 <span class="user-date text-secondary"><small>{{c.updated_at | chatDate}}</small></span>
               </div>
             </div>

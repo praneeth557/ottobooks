@@ -1,120 +1,3 @@
-/* :host {
-  flex: 1;
-  display: flex;
-  overflow: hidden;
-}
-
-.main {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-}
-
-.main-bottom {
-  flex: 1;
-  overflow: hidden;
-}
-
-.cm-navbar {
-    padding: 0 0 3.5rem 0 !important;
-    align-items: flex-start;
-    display: flex;
-    overflow: hidden;
-}
-
-.cm-brand-nav {
-    z-index: 1;
-}
-
-.cm-brand-btn {
-    border-bottom: 1px solid #dbdbdb;
-    padding: 1rem 2rem;
-}
-
-.cm-brand-logo {
-    color: #fafafa;
-    text-decoration: none;
-    font-family: 'Courier New', Courier, monospace;
-}
-
-.cm-brand-logo:hover {
-    color: #fff;
-}
-
-.cm-bottom-nav {
-    width: 100%;
-    align-self: flex-end;
-}
-
-.cm-nav-link {
-    display: block;
-    margin: 0;
-    color: #bbc0c0;
-    padding: 1.25rem 2rem 1.25rem 1rem;
-}
-.cm-top-nav {
-  flex: 1;
-  overflow: auto;
-}
-
-.cm-top-nav-link {
-    padding: 1rem;
-    color: #bbc0c0;
-}
-
-.cm-nav-link:hover {
-    color: #fafafa;
-    text-decoration: none;
-    background-color: #343535;
-}
-
-.cm-nav-link.active {
-  color: #fafafa;
-  text-decoration: none;
-  background-color: #343535;
-}
-
-.cm-nav-link .cm-nav-title {
-    vertical-align: middle;
-}
-
-.cm-brand-nav-link {
-    display: block;
-    padding: 0 0.5rem;
-    color: #dbdfdf !important;
-}
-
-.cm-brand-nav-link:hover {
-    color: #fafafa !important;
-    text-decoration: none;
-}
-
-.cm-brand-nav-link .cm-nav-title {
-    vertical-align: middle;
-}
-
-.cm-nav-title {
-  padding-left: 10px;
-}
-
-.main-body {
-    padding: 0;
-    flex: 1;
-    display: flex;
-}
-
-.max-left-bar {
-  padding: 1rem 0.5rem !important;
-}
-
-.cm-nav-top-title {
-  padding:10px 5px;
-}
-
-.cm-top-nav-icon {
-  margin-bottom: 5px;
-} */
-
 :host {
   flex: 1;
   display: flex;
@@ -224,4 +107,79 @@ background-color: #343535;
 
 .cm-nav-link.active .gettingExpand {
   color: #fafafa;
+}
+
+.hamburger-btn {
+  padding: 0.2rem 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-radius: 0.25rem;
+  display: none;
+}
+
+.navbar-toggler-icon {
+  color: #fafafa;
+}
+
+.bottom-nav {
+  display: none;
+}
+
+.navbar-brand {
+  margin-left: 1.5rem;
+}
+
+
+/**************************************************************
+******************* RESPONSIVE DESIGN *************************
+***************************************************************/
+@media screen and (max-width: 768px) {
+  .aside {
+     display: none;
+     flex-basis: 100%;
+     flex-grow: 1;
+  }
+
+  .menu-btn {
+    height: 25px;
+    width: 25px;
+    font-size: 25px;
+    color: rgb(64, 71, 71);
+  }
+
+  .toggle {
+    display: flex;
+  }
+
+  .hamburger-btn {
+    display: block;
+  }
+
+  .right-nav {
+    display: none;
+  }
+
+  .bottom-nav {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding:0;
+    margin:0;
+    border-top: 1px solid #dbdbdb;
+  }
+
+  .bottom-nav .nav-item {
+    text-decoration: none;
+  }
+
+  .cm-nav-link {
+    padding-bottom: 0.75rem;
+  }
+
+  .navbar-brand {
+    margin-left: 0px;
+  }
 }
