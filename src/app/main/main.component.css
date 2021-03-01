@@ -77,9 +77,13 @@
 }
 
 .cm-nav-link.active {
-color: #fafafa;
-text-decoration: none;
-background-color: #343535;
+  color: #fafafa;
+  text-decoration: none;
+  background-color: #343535;
+}
+
+.cm-brand-nav-link.active {
+  color: #fafafa !important;
 }
 
 .cm-nav-link .cm-nav-title {
