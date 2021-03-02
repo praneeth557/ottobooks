@@ -7,19 +7,25 @@
     </div>
     <div class="body">
       <mat-selection-list [multiple]="false">
-        <mat-list-option *ngFor="let c of conversations | sessions:sessionsFilter:'user_name' | orderbyDate:'updated_at'" [value]="c" class="user-list" (click)="getSession(c); isMessageView = !isMessageView;" [ngClass]="getMatListClasses(c.id)">
-          <div class="user-li">
-            <mat-icon class="user-icon" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
-            <div class="pl-3 flex-column user-right">
-              <span class="user-title">{{c.user_name | titlecase}}</span>
+        <div
+        infiniteScroll
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="1000"
+        (scrolled)="onSessionsScrolled()">
+          <mat-list-option *ngFor="let c of conversations | sessions:sessionsFilter:'user_name' | orderbyDate:'updated_at'" [value]="c" class="user-list" (click)="getSession(c); isMessageView = !isMessageView;" [ngClass]="getMatListClasses(c.id)">
+            <div class="user-li">
+              <mat-icon class="user-icon" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
+              <div class="pl-3 flex-column user-right">
+                <span class="user-title">{{c.user_name | titlecase}}</span>
 
-              <div class="user-right-top">
-                <span class="text-secondary text-truncate last-msg" [title]="c.last_message.message" [hidden]="c.last_message.message == ''"><small>{{c.last_message.sender_type}}: {{c.last_message.message}}</small></span>
-                <span class="user-date text-secondary"><small>{{c.updated_at | chatDate}}</small></span>
+                <div class="user-right-top">
+                  <span class="text-secondary text-truncate last-msg" [title]="c.last_message.message" [hidden]="c.last_message.message == ''"><small>{{c.last_message.sender_type}}: {{c.last_message.message}}</small></span>
+                  <span class="user-date text-secondary"><small>{{c.updated_at | chatDate}}</small></span>
+                </div>
               </div>
             </div>
-          </div>
-        </mat-list-option>
+          </mat-list-option>
+        </div>
       </mat-selection-list>
     </div>
   </div>

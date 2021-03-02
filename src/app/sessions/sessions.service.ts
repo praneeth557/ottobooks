@@ -14,10 +14,12 @@ export interface Message{
 
 export interface Session{
   id: string,
+  session_id: string,
   last_message: Message,
   started_at: string,
   updated_at: string,
-  user_name: string
+  user_name: string,
+  mode: string
 }
 
 @Injectable({
@@ -55,7 +57,7 @@ export class SessionsService {
         observer.next(conv);
       });
       return () => {
-        this.socket.disconnect();
+        //this.socket.disconnect();
       }
     });
 
@@ -92,11 +94,11 @@ export class SessionsService {
 
   }
 
-  sendMsg(payload) {
+  getMessages(payload) {
     this.socket.emit('getmessages',payload);
   }
 
-  onNewMessage() {
+  onGetMessages() {
     let _this = this;
     return Observable.create(observer => {
       _this.socket.on('getmessages', messages => {
@@ -105,7 +107,24 @@ export class SessionsService {
     });
   }
 
-  switchMode(type) {
-    this.socket.emit('switch', type);
+  switchMode(payload) {
+    this.socket.emit('switch', payload);
+  }
+
+  sendMessage(payload) {
+    this.socket.emit('message',payload);
+  }
+
+  onNewMessage() {
+    let _this = this;
+    return Observable.create(observer => {
+      _this.socket.on('message', message => {
+        observer.next(message);
+      });
+    });
+  }
+
+  disconnectSocket() {
+    //this.socket.disconnect();
   }
 }

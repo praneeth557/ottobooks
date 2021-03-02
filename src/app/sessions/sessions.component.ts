@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../authorization.service';
 import { Session, SessionsService } from './sessions.service';
@@ -8,7 +8,7 @@ import { Session, SessionsService } from './sessions.service';
   templateUrl: './sessions.component.html',
   styleUrls: ['./sessions.component.css']
 })
-export class SessionsComponent implements OnInit {
+export class SessionsComponent implements OnInit, OnDestroy {
 
   isMessageView: boolean = false;
   conversations: Array<Session> = [];
@@ -18,11 +18,14 @@ export class SessionsComponent implements OnInit {
   selectedSession: Session = {
     user_name: '',
     id: '',
+    session_id: '',
     last_message: {message: '',sent_at: '',sender_type: ''},
     started_at: '',
-    updated_at: ''
+    updated_at: '',
+    mode: ''
   };
   isEnableAdmin: boolean = false;
+  sessionsBatch = 0;
 
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
@@ -71,13 +74,14 @@ export class SessionsComponent implements OnInit {
 
   getSession(session: Session) {
     let _this = this;
-    this.sessionsService.sendMsg({
+    this.sessionsService.getMessages({
       session_id: session.id
     });
     _this.chatList = [];
-    this.sessionsService.onNewMessage().subscribe(messages => {
+    this.sessionsService.onGetMessages().subscribe(messages => {
       _this.selectedSession = session;
       _this.chatList.push(...messages);
+      this.isEnableAdmin = session.mode == 'admin' ? true : false;
     });
   }
 
@@ -85,12 +89,18 @@ export class SessionsComponent implements OnInit {
     let _this = this;
     event.preventDefault();
     if(this.adminMsg && this.adminMsg.length) {
-
+      this.sessionsService.sendMessage({session_id: this.selectedSession.session_id, message: this.adminMsg});
+      _this.chatList.push({message: this.adminMsg, sent_at: '', sender_type: 'Admin'});
+      this.adminMsg = '';
     }
+    this.sessionsService.onNewMessage().subscribe(message => {
+      console.log(message);
+      _this.chatList.push(message);
+    });
   }
 
-  enableAdmin(selectedSession, type) {
-    this.sessionsService.switchMode(type);
+  enableAdmin(selectedSession, mode) {
+    this.sessionsService.switchMode({session_id: this.selectedSession.session_id, mode: mode});
   }
 
   calculateClasses(ch) {
@@ -105,6 +115,17 @@ export class SessionsComponent implements OnInit {
     return {
       'mat-list-single-selected-option': id === this.selectedSession.id
     }
+  }
+
+  onSessionsScrolled() {
+    const len = this.conversations.length;
+    const lastSession = this.conversations[len-1];
+    console.log(lastSession);
+    this.getSessions(lastSession);
+  }
+
+  ngOnDestroy() {
+    this.sessionsService.disconnectSocket();
   }
 
 }
