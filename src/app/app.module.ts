@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { VfChatWidgetModule } from 'vf-chat-widget';
-import { DatePipe } from '@angular/common';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 
 import { MatInputModule } from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -48,6 +48,7 @@ import { EmptyComponent } from './empty/empty.component';
 import { ProductsComponent } from './products/products.component';
 import { SessionsPipe } from './pipes/sessions.pipe';
 import { OrderbyDatePipe } from './pipes/orderby-date.pipe';
+import { DatePipe } from '@angular/common';
 
 const routes: Routes = [
   { path: '', canActivate: [ AuthGuardService ], component: MainComponent, children: [
@@ -115,7 +116,8 @@ const routes: Routes = [
     MatTabsModule,
     MatCardModule,
     MatGridListModule,
-    VfChatWidgetModule
+    VfChatWidgetModule,
+    InfiniteScrollModule
   ],
   exports: [RouterModule],
   providers: [DatePipe, AuthGuardService, AuthorizationService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],

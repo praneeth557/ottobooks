@@ -10,7 +10,10 @@
   flex: 1;
   overflow: auto;
   flex-direction: column;
-  width: 50% !important;
+}
+
+.form-profile {
+  max-width: 60% !important;
 }
 
 .account-label {
@@ -37,6 +40,12 @@
 /**************************************************************
 ******************* RESPONSIVE DESIGN *************************
 ***************************************************************/
+@media screen and (max-width: 950px) {
+  .form-profile {
+    max-width: 80% !important;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .account-copy {
     width: 25px;
@@ -66,5 +75,9 @@
 
   .name-fields {
     flex-direction: column;
+  }
+
+  .form-profile {
+    max-width: 100% !important;
   }
 }
