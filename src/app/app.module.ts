@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { VfChatWidgetModule } from 'vf-chat-widget';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll'
+import { ScrollingModule } from '@angular/cdk/scrolling'
 
 import { MatInputModule } from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -21,6 +21,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -116,8 +117,9 @@ const routes: Routes = [
     MatTabsModule,
     MatCardModule,
     MatGridListModule,
+    MatProgressSpinnerModule,
     VfChatWidgetModule,
-    InfiniteScrollModule
+    ScrollingModule
   ],
   exports: [RouterModule],
   providers: [DatePipe, AuthGuardService, AuthorizationService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],

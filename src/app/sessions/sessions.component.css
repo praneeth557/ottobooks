@@ -221,6 +221,22 @@
   min-width: fit-content;
 }
 
+.example-viewport {
+  height: 500px;
+}
+
+.message-scroll {
+  overflow: auto;
+}
+
+.spinner {
+  background: transparent;
+}
+
+.spinner-svg {
+  margin: auto;
+}
+
 
 /**************************************************************
 ******************* RESPONSIVE DESIGN *************************

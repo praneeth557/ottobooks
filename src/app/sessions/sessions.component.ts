@@ -1,7 +1,10 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { AuthorizationService } from '../authorization.service';
 import { Session, SessionsService } from './sessions.service';
+import * as _ from 'lodash';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-sessions',
@@ -11,9 +14,9 @@ import { Session, SessionsService } from './sessions.service';
 export class SessionsComponent implements OnInit, OnDestroy {
 
   isMessageView: boolean = false;
-  conversations: Array<Session> = [];
+  conversations = new BehaviorSubject([]);
   token: string;
-  chatList: Array<object> = [];
+  chatList = new BehaviorSubject([]);
   adminMsg: string = '';
   selectedSession: Session = {
     user_name: '',
@@ -27,7 +30,19 @@ export class SessionsComponent implements OnInit, OnDestroy {
   isEnableAdmin: boolean = false;
   sessionsBatch = 0;
 
-  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+  sessionsSpinner: boolean = false;
+  messagesSpinner: boolean = false;
+
+  private sessionBatch:number = 0;
+
+  private destroyAuthSubscribe: Subscription;
+  private destroySessionSubscribe: Subscription;
+  private destroyGetMessagesSubscribe: Subscription;
+  private destroySendMessageSubscribe: Subscription;
+
+  // @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+  @ViewChild('scrollMe')
+  public virtualScrollViewport?: CdkVirtualScrollViewport;
 
   ngAfterViewChecked() {
       this.scrollToBottom();
@@ -35,7 +50,7 @@ export class SessionsComponent implements OnInit, OnDestroy {
 
   scrollToBottom(): void {
     try {
-        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+        //this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch(err) { }
   }
 
@@ -46,10 +61,11 @@ export class SessionsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.authorizationService.user.subscribe(user => {
+    this.destroyAuthSubscribe = this.authorizationService.user.subscribe(user => {
       if(user && user.token) {
         this.token = user.token;
         this.getSessions();
+        this.onObservables();
       } else {
         this.router.navigate(['/login']);
       }
@@ -58,31 +74,61 @@ export class SessionsComponent implements OnInit, OnDestroy {
 
   getSessions(event?: Session) {
     let _this = this;
-    this.chatList = [];
     let sessionReq: any = {};
     this.sessionsService.setupSocketConnection(this.token);
     if(event && event.id) {
-      sessionReq.session_id = event.id;
+      sessionReq.key_id = event.id;
     }
+    this.sessionsSpinner = true;
     this.sessionsService.getSessions(sessionReq);
-    this.sessionsService.sessions.subscribe(sessions => {
+  }
+
+  onObservables() {
+    let _this = this;
+
+    this.destroySessionSubscribe = this.sessionsService.sessions.subscribe(sessions => {
+      this.sessionsSpinner = false;
       if(sessions && sessions.length) {
-        _this.conversations.push(...sessions);
+        const time = new Date();
+        console.info("SESSIONS : " + time);
+        console.info(sessions);
+        let currentSessions = this.conversations.getValue();
+        this.conversations.next(_.concat(currentSessions, sessions));
       }
+    });
+
+
+    this.destroyGetMessagesSubscribe = this.sessionsService.messages.subscribe(messages => {
+      this.messagesSpinner = false;
+      const time = new Date();
+      console.info("MESSAGES : " + time);
+      console.info(messages);
+      _this.chatList.next(_.concat(_this.chatList.getValue(), messages));
+    });
+
+
+    this.destroySendMessageSubscribe = this.sessionsService.message.subscribe(message => {
+      const time = new Date();
+      console.info("NEW MESSAGE : " + time);
+      console.info(message);
+      _this.chatList.next(_.concat(_this.chatList.getValue(), [message]));
     });
   }
 
   getSession(session: Session) {
     let _this = this;
+    this.messagesSpinner = true;
     this.sessionsService.getMessages({
       session_id: session.id
     });
-    _this.chatList = [];
-    this.sessionsService.onGetMessages().subscribe(messages => {
-      _this.selectedSession = session;
-      _this.chatList.push(...messages);
-      this.isEnableAdmin = session.mode == 'admin' ? true : false;
-    });
+    _this.selectedSession = session;
+    _this.isEnableAdmin = session.mode == 'admin' ? true : false;
+    _this.chatList = new BehaviorSubject([]);
+    //this.virtualScrollViewport.scrollToIndex(12);
+    // setTimeout(() => {
+    //   const items = document.getElementsByClassName("mat-list-item");
+    //   items[items.length - 1].scrollIntoView();
+    // }, 10);
   }
 
   sendMessage(event) {
@@ -90,13 +136,10 @@ export class SessionsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if(this.adminMsg && this.adminMsg.length) {
       this.sessionsService.sendMessage({session_id: this.selectedSession.session_id, message: this.adminMsg});
-      _this.chatList.push({message: this.adminMsg, sent_at: '', sender_type: 'Admin'});
+      let newMsg = {message: this.adminMsg, sent_at: '', sender_type: 'Admin'};
+      _this.chatList.next(_.concat(_this.chatList.getValue(), [newMsg]));
       this.adminMsg = '';
     }
-    this.sessionsService.onNewMessage().subscribe(message => {
-      console.log(message);
-      _this.chatList.push(message);
-    });
   }
 
   enableAdmin(selectedSession, mode) {
@@ -117,15 +160,33 @@ export class SessionsComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSessionsScrolled() {
-    const len = this.conversations.length;
-    const lastSession = this.conversations[len-1];
-    console.log(lastSession);
-    this.getSessions(lastSession);
+  onSessionsScrolled(event) {
+    if(event && event/15 === this.sessionBatch+1) {
+      const len = this.conversations.getValue().length;
+      const lastSession = this.conversations.getValue()[len-1];
+      console.log("Sessions scrolled!");
+      console.log(event);
+      console.log(lastSession);
+      let sessionReq: any = {};
+      if(lastSession && lastSession.id) {
+        sessionReq.key_id = lastSession.id;
+      }
+      this.sessionsSpinner = true;
+      this.sessionsService.getSessions(sessionReq);
+      this.sessionBatch ++;
+    }
+  }
+
+  onMessagesScrolled(event) {
+    console.log(event);
   }
 
   ngOnDestroy() {
     this.sessionsService.disconnectSocket();
+    this.destroyAuthSubscribe.unsubscribe();
+    this.destroySessionSubscribe.unsubscribe();
+    this.destroyGetMessagesSubscribe.unsubscribe();
+    this.destroySendMessageSubscribe.unsubscribe();
   }
 
 }

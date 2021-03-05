@@ -28,11 +28,15 @@ export interface Session{
 export class SessionsService {
 
   private socket;
-  messages: Rx.Subject<any>;
   sessions: Rx.Subject<any>;
+  messages: Rx.Subject<any>;
+  message: Rx.Subject<any>;
 
   constructor(private httpClient: HttpClient) { }
 
+  /*************************************************************
+  * CONNECTING SOCKET, EMITTING SESSIONS & OBSERVING SESSIONS
+  *************************************************************/
   connect(apiToken): Rx.Subject<MessageEvent> {
     const manager = new Manager(Constants.API_ENDPOINT, {
       reconnectionDelayMax: 10000,
@@ -56,9 +60,9 @@ export class SessionsService {
         });
         observer.next(conv);
       });
-      return () => {
-        //this.socket.disconnect();
-      }
+      // return () => {
+      //   this.socket.disconnect();
+      // }
     });
 
     let observer = {
@@ -68,7 +72,6 @@ export class SessionsService {
         } else {
           this.socket.emit('sessions');
         }
-
       }
     }
 
@@ -78,6 +81,22 @@ export class SessionsService {
   setupSocketConnection(apiToken) {
     this.sessions = <Rx.Subject<any>>this
       .connect(apiToken)
+      .pipe(
+        map((response: any): any => {
+          return response;
+        })
+      );
+
+    this.messages = <Rx.Subject<any>>this
+      .triggerMessages()
+      .pipe(
+        map((response: any): any => {
+          return response;
+        })
+      );
+
+    this.message = <Rx.Subject<any>>this
+      .triggerNewMessage()
       .pipe(
         map((response: any): any => {
           return response;
@@ -94,37 +113,61 @@ export class SessionsService {
 
   }
 
-  getMessages(payload) {
-    this.socket.emit('getmessages',payload);
-  }
+  /*************************************************************
+  * EMITTING GETMESSAGES & OBSERVING GETMESSAGES
+  *************************************************************/
+  triggerMessages(): Rx.Subject<MessageEvent> {
 
-  onGetMessages() {
-    let _this = this;
-    return Observable.create(observer => {
-      _this.socket.on('getmessages', messages => {
+    let observable = new Observable(observer => {
+      this.socket.on('getmessages', messages => {
         observer.next(messages);
       });
     });
+
+    let observer = {
+      next: (payload: Object) => {
+        this.socket.emit('getmessages', payload);
+      }
+    }
+
+    return Rx.Subject.create(observer, observable);
   }
+
+  getMessages(payload) {
+    this.messages.next(payload);
+  }
+
+
+/*************************************************************
+* EMITTING GETMESSAGES & OBSERVING GETMESSAGES
+*************************************************************/
+ triggerNewMessage(): Rx.Subject<MessageEvent> {
+    let observable = new Observable(observer => {
+      this.socket.on('message', messages => {
+        observer.next(messages);
+      });
+    });
+
+    let observer = {
+      next: (payload: Object) => {
+        this.socket.emit('message', payload);
+      }
+    }
+
+    return Rx.Subject.create(observer, observable);
+  }
+
+  sendMessage(payload) {
+    this.message.next(payload);
+  }
+
+
 
   switchMode(payload) {
     this.socket.emit('switch', payload);
   }
 
-  sendMessage(payload) {
-    this.socket.emit('message',payload);
-  }
-
-  onNewMessage() {
-    let _this = this;
-    return Observable.create(observer => {
-      _this.socket.on('message', message => {
-        observer.next(message);
-      });
-    });
-  }
-
   disconnectSocket() {
-    //this.socket.disconnect();
+    this.socket.disconnect();
   }
 }

@@ -1,32 +1,33 @@
-<div class="sessions" *ngIf="conversations && conversations.length > 0;else nosessions">
-  <div class="left-pane flex-column" [ngClass]="!isMessageView ? 'conv-view': ''">
+<div class="sessions" *ngIf="conversations && conversations.getValue().length > 0;else nosessions">
+  <div class="left-pane d-flex flex-column" [ngClass]="!isMessageView ? 'conv-view': ''">
     <div class="header">
       <div class="search">
         <textarea type="text" rows="1" placeholder="Search" [(ngModel)]="sessionsFilter"></textarea>
       </div>
     </div>
-    <div class="body">
-      <mat-selection-list [multiple]="false">
-        <div
-        infiniteScroll
-        [infiniteScrollDistance]="2"
-        [infiniteScrollThrottle]="1000"
-        (scrolled)="onSessionsScrolled()">
-          <mat-list-option *ngFor="let c of conversations | sessions:sessionsFilter:'user_name' | orderbyDate:'updated_at'" [value]="c" class="user-list" (click)="getSession(c); isMessageView = !isMessageView;" [ngClass]="getMatListClasses(c.id)">
-            <div class="user-li">
-              <mat-icon class="user-icon" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
-              <div class="pl-3 flex-column user-right">
-                <span class="user-title">{{c.user_name | titlecase}}</span>
+    <div class="body d-flex flex-fill flex-column">
+      <cdk-virtual-scroll-viewport [itemSize]="50" (scrolledIndexChange)="onSessionsScrolled($event)" class="flex-fill">
+        <mat-selection-list [multiple]="false" class="d-flex flex-fill flex-column">
+          <ng-container *cdkVirtualFor="let c of conversations | async | sessions:sessionsFilter:'user_name' | orderbyDate:'updated_at'">
+            <mat-list-option [value]="c" class="user-list" (click)="getSession(c); isMessageView = !isMessageView;" [ngClass]="getMatListClasses(c.id)">
+              <div class="user-li">
+                <mat-icon class="user-icon" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
+                <div class="pl-3 flex-column user-right">
+                  <span class="user-title">{{c.user_name | titlecase}}</span>
 
-                <div class="user-right-top">
-                  <span class="text-secondary text-truncate last-msg" [title]="c.last_message.message" [hidden]="c.last_message.message == ''"><small>{{c.last_message.sender_type}}: {{c.last_message.message}}</small></span>
-                  <span class="user-date text-secondary"><small>{{c.updated_at | chatDate}}</small></span>
+                  <div class="user-right-top">
+                    <span class="text-secondary text-truncate last-msg" [title]="c.last_message.message" [hidden]="c.last_message.message == ''"><small>{{c.last_message.sender_type}}: {{c.last_message.message}}</small></span>
+                    <span class="user-date text-secondary"><small>{{c.updated_at | chatDate}}</small></span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </mat-list-option>
-        </div>
-      </mat-selection-list>
+            </mat-list-option>
+          </ng-container>
+        </mat-selection-list>
+      </cdk-virtual-scroll-viewport>
+      <div class="spinner" *ngIf="sessionsSpinner">
+        <mat-spinner diameter="30" class="spinner-svg"></mat-spinner>
+      </div>
     </div>
   </div>
   <div class="right-pane flex-column" [ngClass]="isMessageView ? 'message-view': ''">
@@ -36,7 +37,7 @@
       </button>
       <mat-icon class="user-icon-right" font-size="small" aria-hidden="false" aria-label="Example home icon">person</mat-icon>
       <span class="user-name-right">{{selectedSession.user_name}}</span>
-      <div class="enable-chat" *ngIf="chatList && chatList.length > 0">
+      <div class="enable-chat" *ngIf="chatList.getValue() && chatList.getValue().length > 0">
         <button mat-stroked-button color="primary" *ngIf="!isEnableAdmin;else disableTemplate" (click)="isEnableAdmin = true; enableAdmin(selectedSession, 'admin')">Enable admin chat</button>
         <ng-template #disableTemplate>
           <button mat-stroked-button color="warn" (click)="isEnableAdmin = false; enableAdmin(selectedSession, 'bot')">Disable admin chat</button>
@@ -44,17 +45,24 @@
       </div>
     </div>
     <div class="body flex-column">
-      <div class="chat-body" #scrollMe>
-        <mat-list>
-          <mat-list-item class="vf-chat-li" *ngFor="let ch of chatList" [ngClass]="(ch.sender_type=='User')?'vf-chat-li-left':'vf-chat-li-right'">
-            <div mat-line>
-              <mat-card
-                [ngClass]="calculateClasses(ch)">
-                {{ch.message}}
-              </mat-card>
-            </div>
-          </mat-list-item>
-        </mat-list>
+      <div class="chat-body d-flex flex-column">
+        <div class="spinner" *ngIf="messagesSpinner">
+          <mat-spinner diameter="30" class="spinner-svg"></mat-spinner>
+        </div>
+        <cdk-virtual-scroll-viewport [itemSize]="50" (scrolledIndexChange)="onMessagesScrolled($event)" class="flex-fill message-scroll" #scrollMe>
+          <mat-list class="message-list" >
+            <ng-container *cdkVirtualFor="let ch of chatList | async">
+              <mat-list-item class="vf-chat-li" [ngClass]="(ch.sender_type=='User')?'vf-chat-li-left':'vf-chat-li-right'">
+                <div mat-line>
+                  <mat-card
+                    [ngClass]="calculateClasses(ch)">
+                    {{ch.message}}
+                  </mat-card>
+                </div>
+              </mat-list-item>
+            </ng-container>
+          </mat-list>
+        </cdk-virtual-scroll-viewport>
       </div>
       <div class="chat-footer" *ngIf="isEnableAdmin">
         <div class="chat-input-area">
