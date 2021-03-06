@@ -50,6 +50,7 @@ import { ProductsComponent } from './products/products.component';
 import { SessionsPipe } from './pipes/sessions.pipe';
 import { OrderbyDatePipe } from './pipes/orderby-date.pipe';
 import { DatePipe } from '@angular/common';
+import { ReversePipe } from './pipes/reverse.pipe';
 
 const routes: Routes = [
   { path: '', canActivate: [ AuthGuardService ], component: MainComponent, children: [
@@ -92,7 +93,8 @@ const routes: Routes = [
     EmptyComponent,
     ProductsComponent,
     SessionsPipe,
-    OrderbyDatePipe
+    OrderbyDatePipe,
+    ReversePipe
   ],
   imports: [
     BrowserModule,

@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SessionsPipe implements PipeTransform {
 
   transform(sessions: any[], field : string): any[] {
-    if(!field || field === '' || !sessions.length) {
+    if(!field || field.trim() === '' || !sessions.length) {
       return sessions;
     }
 

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { AuthorizationService } from '../authorization.service';
@@ -34,23 +34,27 @@ export class SessionsComponent implements OnInit, OnDestroy {
   messagesSpinner: boolean = false;
 
   private sessionBatch:number = 0;
+  private messageBatch:number = 1;
+
+  private isMessageScroll: boolean = false;
 
   private destroyAuthSubscribe: Subscription;
   private destroySessionSubscribe: Subscription;
   private destroyGetMessagesSubscribe: Subscription;
   private destroySendMessageSubscribe: Subscription;
 
-  // @ViewChild('scrollMe') private myScrollContainer: ElementRef;
-  @ViewChild('scrollMe')
-  public virtualScrollViewport?: CdkVirtualScrollViewport;
+  @ViewChild('messagesScroll') scrollContainer: CdkVirtualScrollViewport;
 
   ngAfterViewChecked() {
+    if(this.isMessageScroll) {
       this.scrollToBottom();
+    }
   }
 
   scrollToBottom(): void {
     try {
-        //this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+        this.scrollContainer.elementRef.nativeElement.scrollTop = this.scrollContainer.elementRef.nativeElement.scrollHeight;
+
     } catch(err) { }
   }
 
@@ -103,7 +107,7 @@ export class SessionsComponent implements OnInit, OnDestroy {
       const time = new Date();
       console.info("MESSAGES : " + time);
       console.info(messages);
-      _this.chatList.next(_.concat(_this.chatList.getValue(), messages));
+      _this.chatList.next(_.concat(messages,_this.chatList.getValue()));
     });
 
 
@@ -116,19 +120,14 @@ export class SessionsComponent implements OnInit, OnDestroy {
   }
 
   getSession(session: Session) {
-    let _this = this;
     this.messagesSpinner = true;
     this.sessionsService.getMessages({
       session_id: session.id
     });
-    _this.selectedSession = session;
-    _this.isEnableAdmin = session.mode == 'admin' ? true : false;
-    _this.chatList = new BehaviorSubject([]);
-    //this.virtualScrollViewport.scrollToIndex(12);
-    // setTimeout(() => {
-    //   const items = document.getElementsByClassName("mat-list-item");
-    //   items[items.length - 1].scrollIntoView();
-    // }, 10);
+    this.selectedSession = session;
+    this.isEnableAdmin = session.mode == 'admin' ? true : false;
+    this.chatList = new BehaviorSubject([]);
+    this.isMessageScroll = !this.isMessageScroll;
   }
 
   sendMessage(event) {
@@ -178,7 +177,19 @@ export class SessionsComponent implements OnInit, OnDestroy {
   }
 
   onMessagesScrolled(event) {
-    console.log(event);
+    this.isMessageScroll = false;
+    if(event === 5 && this.chatList.getValue().length/20 == this.messageBatch) {
+      const lastMessage = this.chatList.getValue()[0];
+      console.log("Messages scrolled!");
+      console.log(event);
+      console.log('Len ' + this.chatList.getValue().length);
+      let msgObj = {
+        session_id: this.selectedSession.id,
+        key_id: lastMessage.id
+      }
+      this.sessionsService.getMessages(msgObj);
+      this.messageBatch++;
+    }
   }
 
   ngOnDestroy() {
