@@ -33,6 +33,8 @@ export class SessionsComponent implements OnInit, OnDestroy {
   sessionsSpinner: boolean = false;
   messagesSpinner: boolean = false;
 
+  suggestions: Array<any> = [];
+
   private sessionBatch:number = 0;
   private messageBatch:number = 1;
 

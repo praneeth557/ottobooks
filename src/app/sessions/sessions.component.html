@@ -63,6 +63,13 @@
             </ng-container>
           </mat-list>
         </cdk-virtual-scroll-viewport>
+        <div class="suggestions" *ngIf="suggestions && suggestions.length">
+          <ul class="suggestion-ul">
+            <li class="suggestion-li" *ngFor="let sug of suggestions" (click)="sendMessage(sug.text, sug.intent_id)">
+              {{sug.text}}
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="chat-footer" *ngIf="isEnableAdmin">
         <div class="chat-input-area">

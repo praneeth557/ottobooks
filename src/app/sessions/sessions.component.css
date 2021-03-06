@@ -237,6 +237,41 @@
   margin: auto;
 }
 
+.suggestions {
+  text-align: right;
+  padding: 0 16px;
+}
+
+.suggestion-ul {
+  list-style: none;
+  margin-bottom: 0;
+}
+
+.suggestion-li {
+  padding: 10px;
+  background-color: rgba(215, 243, 239, 0.9);
+  color: rgba(1, 117, 106, 0.9);
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  margin-left: auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.suggestion-li:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.suggestion-li:hover {
+  background: rgba(0,150,136,.9);
+  color: #fafafa;
+}
+
 
 /**************************************************************
 ******************* RESPONSIVE DESIGN *************************
