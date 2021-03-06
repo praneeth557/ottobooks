@@ -118,6 +118,9 @@ export class SessionsComponent implements OnInit, OnDestroy {
       console.info("NEW MESSAGE : " + time);
       console.info(message);
       _this.chatList.next(_.concat(_this.chatList.getValue(), [message]));
+      if(message.suggestions && message.suggestions.length) {
+        this.suggestions = message.suggestions;
+      }
     });
   }
 
@@ -132,15 +135,24 @@ export class SessionsComponent implements OnInit, OnDestroy {
     this.isMessageScroll = !this.isMessageScroll;
   }
 
-  sendMessage(event) {
+  sendMessage(event, text?) {
     let _this = this;
     event.preventDefault();
-    if(this.adminMsg && this.adminMsg.length) {
-      this.sessionsService.sendMessage({session_id: this.selectedSession.session_id, message: this.adminMsg});
-      let newMsg = {message: this.adminMsg, sent_at: '', sender_type: 'Admin'};
-      _this.chatList.next(_.concat(_this.chatList.getValue(), [newMsg]));
-      this.adminMsg = '';
+    let newMsg: any = {sent_at: '', sender_type: 'Admin'};
+    let message = ''
+    if(text) {
+      message = text
+    } else if (this.adminMsg && this.adminMsg.length) {
+      message = this.adminMsg;
+    } else {
+      return;
     }
+
+    this.sessionsService.sendMessage({session_id: this.selectedSession.session_id, message: message});
+    newMsg.message = message;
+    this.chatList.next(_.concat(_this.chatList.getValue(), [newMsg]));
+    this.adminMsg = '';
+    this.suggestions = [];
   }
 
   enableAdmin(selectedSession, mode) {

@@ -109,8 +109,8 @@
   margin: 0;
   display: flex;
   padding: 0.5rem 2rem;
-  border-top: 1px solid rgb(230, 230, 230);
-  box-shadow: 0 0 2rem 1rem rgba(0,0,0,.15) !important;
+  border-top: 1px solid #eee;
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
 }
 
 .right-pane .body .chat-footer .chat-input-area {
@@ -260,7 +260,8 @@
   width: fit-content;
   text-align: left;
   cursor: pointer;
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+  border: 1px solid rgba(1, 117, 106, 0.9);
 }
 
 .suggestion-li:not(:last-child) {

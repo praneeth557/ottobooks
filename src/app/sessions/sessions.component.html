@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="body flex-column">
-      <div class="chat-body d-flex flex-column">
+      <div class="chat-body d-flex flex-column mb-2">
         <div class="spinner" *ngIf="messagesSpinner">
           <mat-spinner diameter="30" class="spinner-svg"></mat-spinner>
         </div>
@@ -65,7 +65,7 @@
         </cdk-virtual-scroll-viewport>
         <div class="suggestions" *ngIf="suggestions && suggestions.length">
           <ul class="suggestion-ul">
-            <li class="suggestion-li" *ngFor="let sug of suggestions" (click)="sendMessage(sug.text, sug.intent_id)">
+            <li class="suggestion-li" *ngFor="let sug of suggestions" (click)="sendMessage($event, sug.text)">
               {{sug.text}}
             </li>
           </ul>
