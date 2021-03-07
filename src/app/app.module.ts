@@ -22,6 +22,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatTableModule} from '@angular/material/table';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -51,12 +53,14 @@ import { SessionsPipe } from './pipes/sessions.pipe';
 import { OrderbyDatePipe } from './pipes/orderby-date.pipe';
 import { DatePipe } from '@angular/common';
 import { ReversePipe } from './pipes/reverse.pipe';
+import { ShortcutsComponent } from './shortcuts/shortcuts.component';
 
 const routes: Routes = [
   { path: '', canActivate: [ AuthGuardService ], component: MainComponent, children: [
     { path: 'dashboard', canActivate: [ AuthGuardService ], component: DashboardComponent },
     { path: 'getting-started/domain', canActivate: [ AuthGuardService ], component: GettingStartedComponent },
     { path: 'getting-started/products', canActivate: [ AuthGuardService ], component: ProductsComponent },
+    { path: 'getting-started/shortcuts', canActivate: [ AuthGuardService ], component: ShortcutsComponent },
     { path: 'configure', canActivate: [ AuthGuardService ], component: ConfigureComponent },
     { path: 'inbox', canActivate: [ AuthGuardService ], component: InboxComponent },
     { path: 'sessions', canActivate: [ AuthGuardService ], component: SessionsComponent },
@@ -94,7 +98,8 @@ const routes: Routes = [
     ProductsComponent,
     SessionsPipe,
     OrderbyDatePipe,
-    ReversePipe
+    ReversePipe,
+    ShortcutsComponent
   ],
   imports: [
     BrowserModule,
@@ -120,6 +125,8 @@ const routes: Routes = [
     MatCardModule,
     MatGridListModule,
     MatProgressSpinnerModule,
+    MatTableModule,
+    MatDialogModule,
     VfChatWidgetModule,
     ScrollingModule
   ],

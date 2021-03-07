@@ -1,0 +1,17 @@
+:host {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.shortcuts {
+  overflow: hidden;
+}
+
+.shortcut-table {
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
