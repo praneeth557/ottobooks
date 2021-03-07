@@ -31,6 +31,7 @@ export class SessionsService {
   sessions: Rx.Subject<any>;
   messages: Rx.Subject<any>;
   message: Rx.Subject<any>;
+  shortcuts: Rx.Subject<any>;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -102,6 +103,14 @@ export class SessionsService {
           return response;
         })
       );
+
+    this.shortcuts = <Rx.Subject<any>>this
+      .triggerShortcuts()
+      .pipe(
+        map((response: any): any => {
+          return response;
+        })
+      );
   }
 
   getSessions(key_id?: any) {
@@ -138,10 +147,10 @@ export class SessionsService {
   }
 
 
-/*************************************************************
-* EMITTING GETMESSAGES & OBSERVING GETMESSAGES
-*************************************************************/
- triggerNewMessage(): Rx.Subject<MessageEvent> {
+  /*************************************************************
+  * EMITTING GETMESSAGES & OBSERVING GETMESSAGES
+  *************************************************************/
+  triggerNewMessage(): Rx.Subject<MessageEvent> {
     let observable = new Observable(observer => {
       this.socket.on('message', messages => {
         observer.next(messages);
@@ -159,6 +168,30 @@ export class SessionsService {
 
   sendMessage(payload) {
     this.message.next(payload);
+  }
+
+
+  /*************************************************************
+  * EMITTING SHORTCUTS & OBSERVING SHORTCUTS
+  *************************************************************/
+  triggerShortcuts(): Rx.Subject<MessageEvent> {
+    let observable = new Observable(observer => {
+      this.socket.on('shortcuts', shortcuts => {
+        observer.next(shortcuts);
+      });
+    });
+
+    let observer = {
+      next: (payload: Object) => {
+        this.socket.emit('shortcuts', payload);
+      }
+    }
+
+    return Rx.Subject.create(observer, observable);
+  }
+
+  getShortcut(payload) {
+    this.shortcuts.next(payload);
   }
 
 

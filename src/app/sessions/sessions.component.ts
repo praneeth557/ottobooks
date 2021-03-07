@@ -5,6 +5,7 @@ import { AuthorizationService } from '../authorization.service';
 import { Session, SessionsService } from './sessions.service';
 import * as _ from 'lodash';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { Shortcut } from '../shortcuts/shortcuts.service';
 
 @Component({
   selector: 'app-sessions',
@@ -35,6 +36,10 @@ export class SessionsComponent implements OnInit, OnDestroy {
 
   suggestions: Array<any> = [];
 
+  isShortcutsEnabled: boolean = false;
+  shortcuts: Shortcut[] = [];
+  searchShortcutText: string = '';
+
   private sessionBatch:number = 0;
   private messageBatch:number = 1;
 
@@ -44,12 +49,17 @@ export class SessionsComponent implements OnInit, OnDestroy {
   private destroySessionSubscribe: Subscription;
   private destroyGetMessagesSubscribe: Subscription;
   private destroySendMessageSubscribe: Subscription;
+  private destroyShortcutsSubscribe: Subscription;
 
   @ViewChild('messagesScroll') scrollContainer: CdkVirtualScrollViewport;
+  @ViewChild('adminMsgTextArea') adminMsgTextArea: ElementRef;
+  @ViewChild('searchShortcut') searchShortcut: ElementRef;
 
   ngAfterViewChecked() {
     if(this.isMessageScroll) {
       this.scrollToBottom();
+      if(this.adminMsgTextArea && !this.searchShortcut) this.adminMsgTextArea.nativeElement.focus();
+      if(this.searchShortcut) this.searchShortcut.nativeElement.focus();
     }
   }
 
@@ -79,7 +89,6 @@ export class SessionsComponent implements OnInit, OnDestroy {
   }
 
   getSessions(event?: Session) {
-    let _this = this;
     let sessionReq: any = {};
     this.sessionsService.setupSocketConnection(this.token);
     if(event && event.id) {
@@ -122,6 +131,11 @@ export class SessionsComponent implements OnInit, OnDestroy {
         this.suggestions = message.suggestions;
       }
     });
+
+    this.destroyShortcutsSubscribe = this.sessionsService.shortcuts.subscribe(shortcuts => {
+      console.log(shortcuts);
+      _this.shortcuts = shortcuts;
+    });
   }
 
   getSession(session: Session) {
@@ -133,6 +147,8 @@ export class SessionsComponent implements OnInit, OnDestroy {
     this.isEnableAdmin = session.mode == 'admin' ? true : false;
     this.chatList = new BehaviorSubject([]);
     this.isMessageScroll = !this.isMessageScroll;
+    this.isShortcutsEnabled = false;
+    this.adminMsg = '';
   }
 
   sendMessage(event, text?) {
@@ -206,12 +222,33 @@ export class SessionsComponent implements OnInit, OnDestroy {
     }
   }
 
+  getShortcuts(val?) {
+    console.log("Shortcuts");
+    this.isShortcutsEnabled = true;
+    //this.searchShortcut.nativeElement.focus();
+    this.sessionsService.getShortcut({prefix: val? val : ''});
+  }
+
+  fillShortcut(shortcut: Shortcut) {
+    if(shortcut && shortcut.text) {
+      this.adminMsg = shortcut.text;
+      this.isShortcutsEnabled = false;
+      if(this.adminMsgTextArea) this.adminMsgTextArea.nativeElement.focus();
+    }
+  }
+
+  closeShortcuts() {
+    this.isShortcutsEnabled = false;
+    this.adminMsg = '';
+  }
+
   ngOnDestroy() {
     this.sessionsService.disconnectSocket();
     this.destroyAuthSubscribe.unsubscribe();
     this.destroySessionSubscribe.unsubscribe();
     this.destroyGetMessagesSubscribe.unsubscribe();
     this.destroySendMessageSubscribe.unsubscribe();
+    this.destroyShortcutsSubscribe.unsubscribe();
   }
 
 }

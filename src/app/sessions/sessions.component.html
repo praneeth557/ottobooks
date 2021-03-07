@@ -73,7 +73,24 @@
       </div>
       <div class="chat-footer" *ngIf="isEnableAdmin">
         <div class="chat-input-area">
-          <textarea type="text" rows="1" placeholder="Type a message" [(ngModel)]="adminMsg" (keydown.enter)="sendMessage($event)"></textarea>
+          <div class="shortcuts-popover d-flex flex-column" *ngIf="isShortcutsEnabled">
+            <div class="shortcuts-header d-flex">
+              <span class="text-secondary">
+                <input type="text" placeholder="Search shortcut" class="search-shortcut" #searchShortcut [(ngModel)]="searchShortcutText" (ngModelChange)="getShortcuts(searchShortcutText)"/>
+              </span>
+              <span class="flex-fill text-right ml-3">
+                <button mat-icon-button class="close-shortcuts text-secondary" (click)="closeShortcuts()">X</button>
+              </span>
+            </div>
+            <div class="shortcuts-body">
+              <mat-selection-list #shoes [multiple]="false">
+                <mat-list-option *ngFor="let shortcut of shortcuts" [value]="shortcut" (click)="fillShortcut(shortcut)" [title]="shortcut.text">
+                  {{shortcut.name}}
+                </mat-list-option>
+              </mat-selection-list>
+            </div>
+          </div>
+          <textarea type="text" rows="1" placeholder="Type a message" #adminMsgTextArea [(ngModel)]="adminMsg" (ngModelChange)="adminMsg == '/' ? getShortcuts() : ''" (keydown.enter)="sendMessage($event)"></textarea>
         </div>
       </div>
     </div>

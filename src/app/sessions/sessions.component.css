@@ -115,6 +115,7 @@
 
 .right-pane .body .chat-footer .chat-input-area {
   flex: 1;
+  position: relative;
 }
 
 .chat-input-area textarea {
@@ -271,6 +272,50 @@
 .suggestion-li:hover {
   background: rgba(0,150,136,.9);
   color: #fafafa;
+}
+
+.shortcuts-popover {
+  position: absolute;
+  left: 10px;
+  top: -250px;
+  z-index: 999;
+  background-color: #fafafa;
+  outline: none;
+  border-radius: 6px;
+  box-sizing: content-box;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(95, 94, 94, 0.12),0 4px 12px 0 rgba(0,0,0,.12);
+  width: auto;
+  height: 290px;
+  max-width: 400px;
+  max-height: 300px;
+}
+
+.shortcuts-header {
+  border-bottom: 1px solid #eee;
+  padding: 0.5rem 0.75rem 0.5rem 1rem;
+  align-items: baseline;
+}
+
+.shortcuts-body {
+  overflow: auto;
+}
+
+.close-shortcuts {
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.search-shortcut {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #dbdbdb;
+}
+
+.search-shortcut:focus {
+  outline: none;
 }
 
 
