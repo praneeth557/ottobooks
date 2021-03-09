@@ -12,6 +12,10 @@
   overflow: auto;
 }
 
+.shortcut-textarea {
+  width: 100%;
+}
+
 table {
   width: 100%;
 }

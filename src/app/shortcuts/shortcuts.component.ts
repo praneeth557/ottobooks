@@ -25,7 +25,6 @@ export class ShortcutsComponent implements OnInit {
   ngOnInit(): void {
     this.shortcutsService.getShortcuts().subscribe((res:any) => {
       this.dataSource.data = res;
-      this.table.renderRows();
       console.log(res);
     })
   }
@@ -39,7 +38,6 @@ export class ShortcutsComponent implements OnInit {
   addNewRow() {
     console.log(this.dataSource);
     this.dataSource.data.unshift({name: '', text: '', isAdd: true});
-    this.table.renderRows();
   }
 
   addShortcut(element) {
@@ -50,7 +48,6 @@ export class ShortcutsComponent implements OnInit {
         element.isAdd = false;
         element.isEdit = false;
         this.dataSource.data.unshift(element);
-        this.table.renderRows();
       });
     }
   }
@@ -69,7 +66,6 @@ export class ShortcutsComponent implements OnInit {
         d.isEdit = isEdit;
       }
     });
-    this.table.renderRows();
   }
 
 }
