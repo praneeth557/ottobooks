@@ -62,9 +62,9 @@ const routes: Routes = [
     { path: 'getting-started/products', canActivate: [ AuthGuardService ], component: ProductsComponent },
     { path: 'getting-started/shortcuts', canActivate: [ AuthGuardService ], component: ShortcutsComponent },
     { path: 'configure', canActivate: [ AuthGuardService ], component: ConfigureComponent },
-    { path: 'inbox', canActivate: [ AuthGuardService ], component: InboxComponent },
+    // { path: 'inbox', canActivate: [ AuthGuardService ], component: InboxComponent },
     { path: 'sessions', canActivate: [ AuthGuardService ], component: SessionsComponent },
-    { path: 'performance', canActivate: [ AuthGuardService ], component: AnalyticsComponent },
+    // { path: 'performance', canActivate: [ AuthGuardService ], component: AnalyticsComponent },
     { path: 'integration', canActivate: [ AuthGuardService ], component: IntegrationComponent },
     // { path: 'billing', canActivate: [ AuthGuardService ], component: BillingComponent },
     { path: 'profile', canActivate: [ AuthGuardService ], component: ProfileComponent }
