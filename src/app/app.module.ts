@@ -60,7 +60,7 @@ const routes: Routes = [
     { path: 'dashboard', canActivate: [ AuthGuardService ], component: DashboardComponent },
     { path: 'getting-started/domain', canActivate: [ AuthGuardService ], component: GettingStartedComponent },
     { path: 'getting-started/products', canActivate: [ AuthGuardService ], component: ProductsComponent },
-    { path: 'getting-started/shortcuts', canActivate: [ AuthGuardService ], component: ShortcutsComponent },
+    // { path: 'getting-started/shortcuts', canActivate: [ AuthGuardService ], component: ShortcutsComponent },
     { path: 'configure', canActivate: [ AuthGuardService ], component: ConfigureComponent },
     // { path: 'inbox', canActivate: [ AuthGuardService ], component: InboxComponent },
     { path: 'sessions', canActivate: [ AuthGuardService ], component: SessionsComponent },
