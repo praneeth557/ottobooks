@@ -7,7 +7,7 @@
   <mat-card class="col-12">
     <mat-card-content>
       <table
-        class="table table-striped"
+        class="table table-striped table-bordered"
         *ngIf="
           questionnaire && questionnaire.length > 0;
           else noPendingQuestions
@@ -27,6 +27,7 @@
             <td>
               <mat-form-field
                 appearance="outline"
+                class="w-100"
                 *ngIf="q.id == updatedId || q.isNew"
               >
                 <input matInput [(ngModel)]="updatedQ" />
@@ -38,6 +39,7 @@
             <td>
               <mat-form-field
                 appearance="outline"
+                class="w-100"
                 *ngIf="q.id == updatedId || q.isNew"
               >
                 <textarea matInput [(ngModel)]="updatedA"></textarea>
