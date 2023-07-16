@@ -1,50 +1,51 @@
 import { Component, OnInit } from '@angular/core';
-import { IQuestionnaire, QuestionnaireService } from '../questionnaire/questionnaire.service';
+import {
+  IQuestionnaire,
+  QuestionnaireService,
+} from '../questionnaire/questionnaire.service';
 import { AuthorizationService } from '../authorization.service';
 import { User } from '../user';
 
-export interface ISavedQ {
-  intent_id: string, 
-  intent_desc: string, 
-  answer: string, 
-  isEdit?: boolean
+export interface IQuestion {
+  id?: string;
+  question: string;
+  answer: string;
 }
 
 @Component({
   selector: 'app-saved-questionnaire',
   templateUrl: './saved-questionnaire.component.html',
-  styleUrls: ['./saved-questionnaire.component.css']
+  styleUrls: ['./saved-questionnaire.component.css'],
 })
 export class SavedQuestionnaireComponent implements OnInit {
-
   constructor(
     private questionnaireService: QuestionnaireService,
-    private authorizationService: AuthorizationService  
-  ) { }
+    private authorizationService: AuthorizationService
+  ) {}
 
   ngOnInit(): void {
-    this.authorizationService.user.subscribe(user => {
-      if(user) this.user = user;
+    this.authorizationService.user.subscribe((user) => {
+      if (user) this.user = user;
     });
-    this.questionnaireService.getSavedQuestions().subscribe((questions:any) => {
-      this.savedQuestions = questions;
-    });
+    this.questionnaireService
+      .getCompanyQuestionnaire()
+      .subscribe((questions: any) => {
+        this.questionnaire = questions;
+      });
   }
 
-  savedQuestions: Array<ISavedQ> = [];
+  questionnaire: Array<IQuestion> = [];
   user!: User;
 
-  onQuestionnaireUpdate(questionnaire: ISavedQ) {
-    let quesReq: any = {
-      companyid : this.user.companyId,
-      intentid : questionnaire.intent_id,
-      answer : questionnaire.answer
-    } 
-    this.questionnaireService.updateQuestionnaire(quesReq).subscribe(quesRes => {
-      
-    },error => {
-      
-    });
+  onQuestionnaireUpdate(questionnaire: IQuestion) {
+    // let quesReq: any = {
+    //   companyid: this.user.companyId,
+    //   intentid: questionnaire.intent_id,
+    //   answer: questionnaire.answer,
+    // };
+    // this.questionnaireService.updateQuestionnaire(quesReq).subscribe(
+    //   (quesRes) => {},
+    //   (error) => {}
+    // );
   }
-
 }

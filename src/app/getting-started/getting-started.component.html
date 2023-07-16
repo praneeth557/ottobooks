@@ -1,68 +1,82 @@
+<mat-tab-group
+  mat-stretch-tabs
+  [selectedIndex]="selectedTab.value"
+  (selectedIndexChange)="selectedTab.setValue($event)"
+  class="gs-tabs"
+>
+  <mat-tab>
+    <ng-template mat-tab-label> Domain Questions </ng-template>
 
-<mat-tab-group mat-stretch-tabs [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)" class="gs-tabs">
-    <mat-tab>
-        <ng-template mat-tab-label>
-          Domain Questions
-        </ng-template>
-
-        <div class="row mt-3">
-            <div class="col-6 m6">
-                <h5 class="col-12">
-                    Let's get started
-                </h5>
-                <div class="row">
-                    <form class="col">
-                        <mat-form-field class="col">
-                            <mat-label>Domain</mat-label>
-                            <input type="text"
-                                 placeholder="Pick one"
-                                 aria-label="Domain"
-                                 matInput
-                                 name="domainName"
-                                 [(ngModel)]="domain"
-                                 (ngModelChange)="getDomain($event)"
-                                 [matAutocomplete]="auto"
-                                 [disabled]="!this.isEditMode">
-                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                                <mat-option *ngFor="let d of domainList" [value]="d">
-                                    {{d.domain_name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </form>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 mt-2 text-right">
-                        <button mat-raised-button color="primary" (click)="this.isEditMode = true" *ngIf="!isEditMode">Edit</button>
-                        <button mat-raised-button color="primary" (click)="savedomain()" *ngIf="isEditMode">Next</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </mat-tab>
-
-    <mat-tab>
-        <ng-template mat-tab-label>
-            Pending Questions
-        </ng-template>
+    <div class="row mt-3">
+      <div class="col-6 m6">
+        <h5 class="col-12">Let's get started</h5>
         <div class="row">
-            <div class="col-12 m6" *ngIf="selectedTab.value == 1">
-                <app-questionnaire></app-questionnaire>
-            </div>
+          <form class="col">
+            <mat-form-field class="col">
+              <mat-label>Domain</mat-label>
+              <input
+                type="text"
+                placeholder="Pick one"
+                aria-label="Domain"
+                matInput
+                name="domainName"
+                [(ngModel)]="domain"
+                (ngModelChange)="getDomain($event)"
+                [matAutocomplete]="auto"
+                [disabled]="!this.isEditMode"
+              />
+              <mat-autocomplete
+                #auto="matAutocomplete"
+                [displayWith]="displayFn"
+              >
+                <mat-option *ngFor="let d of domainList" [value]="d">
+                  {{ d.domain_name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
         </div>
-    </mat-tab>
-
-    <mat-tab>
-        <ng-template mat-tab-label>
-            Saved Questions
-        </ng-template>
 
         <div class="row">
-            <div class="col-12 m6" *ngIf="selectedTab.value == 2">
-                <app-saved-questionnaire></app-saved-questionnaire>
-            </div>
+          <div class="col-12 mt-2 text-right">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="this.isEditMode = true"
+              *ngIf="!isEditMode"
+            >
+              Edit
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="savedomain()"
+              *ngIf="isEditMode"
+            >
+              Next
+            </button>
+          </div>
         </div>
-    </mat-tab>
-  </mat-tab-group>
+      </div>
+    </div>
+  </mat-tab>
 
+  <mat-tab>
+    <ng-template mat-tab-label> Company Questions </ng-template>
+    <div class="row">
+      <div class="col-12 m6" *ngIf="selectedTab.value == 1">
+        <app-questionnaire></app-questionnaire>
+      </div>
+    </div>
+  </mat-tab>
+
+  <!-- <mat-tab>
+    <ng-template mat-tab-label> Company Questions </ng-template>
+
+    <div class="row">
+      <div class="col-12 m6" *ngIf="selectedTab.value == 2">
+        <app-saved-questionnaire></app-saved-questionnaire>
+      </div>
+    </div>
+  </mat-tab> -->
+</mat-tab-group>
