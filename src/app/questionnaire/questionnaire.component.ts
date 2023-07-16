@@ -59,10 +59,10 @@ export class QuestionnaireComponent implements OnInit {
     );
   }
 
-  createQuestionHandler(q: IQuestionnaire) {
+  createQuestionHandler() {
     const newQuestion: IQuestionnaire = {
-      question: q.question,
-      answer: q.answer,
+      question: this.updatedQ,
+      answer: this.updatedA,
     };
     this.questionnaireService
       .createCompanyQuestion(newQuestion)
