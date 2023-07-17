@@ -4,26 +4,26 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { VfChatWidgetModule } from 'vf-chat-widget';
-import { ScrollingModule } from '@angular/cdk/scrolling'
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { MatInputModule } from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatButtonModule} from '@angular/material/button';
-import {MatSelectModule} from '@angular/material/select';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatListModule} from '@angular/material/list';
-import {MatIconModule} from '@angular/material/icon';
-import {MatStepperModule} from '@angular/material/stepper';
-import {ClipboardModule} from '@angular/cdk/clipboard';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatCardModule} from '@angular/material/card';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatTableModule} from '@angular/material/table';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatStepperModule } from '@angular/material/stepper';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,24 +56,61 @@ import { ReversePipe } from './pipes/reverse.pipe';
 import { ShortcutsComponent } from './shortcuts/shortcuts.component';
 
 const routes: Routes = [
-  { path: '', canActivate: [ AuthGuardService ], component: MainComponent, children: [
-    { path: 'dashboard', canActivate: [ AuthGuardService ], component: DashboardComponent },
-    { path: 'getting-started/domain', canActivate: [ AuthGuardService ], component: GettingStartedComponent },
-    { path: 'getting-started/products', canActivate: [ AuthGuardService ], component: ProductsComponent },
-    // { path: 'getting-started/shortcuts', canActivate: [ AuthGuardService ], component: ShortcutsComponent },
-    { path: 'configure', canActivate: [ AuthGuardService ], component: ConfigureComponent },
-    // { path: 'inbox', canActivate: [ AuthGuardService ], component: InboxComponent },
-    { path: 'sessions', canActivate: [ AuthGuardService ], component: SessionsComponent },
-    // { path: 'performance', canActivate: [ AuthGuardService ], component: AnalyticsComponent },
-    { path: 'integration', canActivate: [ AuthGuardService ], component: IntegrationComponent },
-    // { path: 'billing', canActivate: [ AuthGuardService ], component: BillingComponent },
-    { path: 'profile', canActivate: [ AuthGuardService ], component: ProfileComponent }
-  ] },
+  {
+    path: '',
+    canActivate: [AuthGuardService],
+    component: MainComponent,
+    children: [
+      {
+        path: 'dashboard',
+        canActivate: [AuthGuardService],
+        component: DashboardComponent,
+      },
+      {
+        path: 'questionnaire/company',
+        canActivate: [AuthGuardService],
+        component: GettingStartedComponent,
+      },
+      {
+        path: 'questionnaire/products',
+        canActivate: [AuthGuardService],
+        component: GettingStartedComponent,
+      },
+      // { path: 'getting-started/shortcuts', canActivate: [ AuthGuardService ], component: ShortcutsComponent },
+      {
+        path: 'configure',
+        canActivate: [AuthGuardService],
+        component: ConfigureComponent,
+      },
+      // { path: 'inbox', canActivate: [ AuthGuardService ], component: InboxComponent },
+      {
+        path: 'sessions',
+        canActivate: [AuthGuardService],
+        component: SessionsComponent,
+      },
+      // { path: 'performance', canActivate: [ AuthGuardService ], component: AnalyticsComponent },
+      {
+        path: 'integration',
+        canActivate: [AuthGuardService],
+        component: IntegrationComponent,
+      },
+      // { path: 'billing', canActivate: [ AuthGuardService ], component: BillingComponent },
+      {
+        path: 'profile',
+        canActivate: [AuthGuardService],
+        component: ProfileComponent,
+      },
+    ],
+  },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'page-not-found', component: PageNotFoundComponent },
-  { path: 'shopify/redirect', canActivate: [ AuthGuardService ], component: EmptyComponent },
-  { path: '**', redirectTo: 'page-not-found' }
+  {
+    path: 'shopify/redirect',
+    canActivate: [AuthGuardService],
+    component: EmptyComponent,
+  },
+  { path: '**', redirectTo: 'page-not-found' },
 ];
 
 @NgModule({
@@ -99,7 +136,7 @@ const routes: Routes = [
     SessionsPipe,
     OrderbyDatePipe,
     ReversePipe,
-    ShortcutsComponent
+    ShortcutsComponent,
   ],
   imports: [
     BrowserModule,
@@ -128,10 +165,19 @@ const routes: Routes = [
     MatTableModule,
     MatDialogModule,
     VfChatWidgetModule,
-    ScrollingModule
+    ScrollingModule,
   ],
   exports: [RouterModule],
-  providers: [DatePipe, AuthGuardService, AuthorizationService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
-  bootstrap: [AppComponent]
+  providers: [
+    DatePipe,
+    AuthGuardService,
+    AuthorizationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
