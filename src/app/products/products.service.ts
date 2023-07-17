@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Constants } from '../constants';
+import { IQuestionnaire } from '../questionnaire/questionnaire.service';
 
 export interface IProduct {
   company_id: string;
@@ -20,10 +21,23 @@ export class ProductsService {
     return this.httpClient.get(Constants.API_ENDPOINT + 'products');
   }
 
-  getProductQuestionnaire(request: any) {
+  getProductQuestionnaire(product_id: string) {
     return this.httpClient.get(
-      Constants.API_ENDPOINT + 'product_answers',
-      request
+      `${Constants.API_ENDPOINT}product_answers?product_id=${product_id}`
+    );
+  }
+
+  createProductQuestion(question: any) {
+    return this.httpClient.post(
+      `${Constants.API_ENDPOINT}product_answers`,
+      question
+    );
+  }
+
+  updateProductQuestion(question: any) {
+    return this.httpClient.put(
+      `${Constants.API_ENDPOINT}product_answers`,
+      question
     );
   }
 }

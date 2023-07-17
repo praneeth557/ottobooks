@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IProduct, ProductsService } from './products.service';
+import { IQuestionnaire } from '../questionnaire/questionnaire.service';
 
 @Component({
   selector: 'app-products',
@@ -21,22 +22,47 @@ export class ProductsComponent implements OnInit {
         this.selectedProductId = this.products[0].product_id;
         this.selectedProductHandler(this.selectedProductId);
       }
-      // this.products = res.map((product) => {
-      //   product.product_image = JSON.parse(product.product_image)[0].src;
-      //   return product;
-      // });
+      this.products = res.map((product: any) => {
+        if (product.product_image.length)
+          product.product_image = product.product_image[0].src;
+        return product;
+      });
     });
   }
 
   selectedProductHandler(productId: string) {
     this.selectedProductId = productId;
     this.productsService
-      .getProductQuestionnaire({
-        product_id: productId,
-      })
+      .getProductQuestionnaire(productId)
       .subscribe((productQuestionnaire: any) => {
         this.productQuestionnaire = productQuestionnaire;
-        console.log(this.productQuestionnaire);
+      });
+  }
+
+  createQuestionHandler(updatedQuestion: any) {
+    const req = {
+      product_id: updatedQuestion.productId,
+      question: updatedQuestion.question,
+      answer: updatedQuestion.answer,
+    };
+    this.productsService.createProductQuestion(req).subscribe((res) => {
+      this.productsService
+        .getProductQuestionnaire(updatedQuestion.productId)
+        .subscribe((productQuestionnaire: any) => {
+          this.productQuestionnaire = productQuestionnaire;
+        });
+    });
+  }
+
+  updateQuestionHandler(updatedQuestion: any) {
+    this.productsService
+      .updateProductQuestion(updatedQuestion)
+      .subscribe((res) => {
+        this.productsService
+          .getProductQuestionnaire(updatedQuestion.productId)
+          .subscribe((productQuestionnaire: any) => {
+            this.productQuestionnaire = productQuestionnaire;
+          });
       });
   }
 }

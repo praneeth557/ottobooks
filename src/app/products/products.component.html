@@ -19,7 +19,7 @@
       >
         <img
           mat-card-image
-          src="./../../assets/shopify-logo.png"
+          [src]="product.product_image"
           alt="No Image"
           height="240"
         />
@@ -39,11 +39,12 @@
       </mat-card>
     </div>
     <div class="right-pane d-flex flex-column">
-      <mat-tab-group mat-stretch-tabs class="flex-fill right-tabs">
-        <mat-tab label="Questions">
-          <div class="p-3">Questions</div>
-        </mat-tab>
-      </mat-tab-group>
+      <app-saved-questionnaire
+        [questionnaire]="productQuestionnaire"
+        [id]="selectedProductId"
+        (create)="createQuestionHandler($event)"
+        (update)="updateQuestionHandler($event)"
+      ></app-saved-questionnaire>
     </div>
   </div>
 </div>
