@@ -10,6 +10,7 @@ export class ProductsComponent implements OnInit {
   products: Array<IProduct> = [];
   productQuestionnaire: Array<any> = [];
   selectedProductId: string = '';
+  searchproduct: string;
 
   constructor(private productsService: ProductsService) {}
 

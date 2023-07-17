@@ -54,6 +54,7 @@ import { OrderbyDatePipe } from './pipes/orderby-date.pipe';
 import { DatePipe } from '@angular/common';
 import { ReversePipe } from './pipes/reverse.pipe';
 import { ShortcutsComponent } from './shortcuts/shortcuts.component';
+import { SearchFilterPipe } from './pipes/seach-filter.pipe';
 
 const routes: Routes = [
   {
@@ -137,6 +138,7 @@ const routes: Routes = [
     OrderbyDatePipe,
     ReversePipe,
     ShortcutsComponent,
+    SearchFilterPipe,
   ],
   imports: [
     BrowserModule,

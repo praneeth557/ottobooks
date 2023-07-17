@@ -4,11 +4,16 @@
 >
   <div class="product d-flex ml-2 mr-2 mb-3">
     <div class="left-pane w-25 border-right mr-2 p-3">
+      <mat-form-field appearance="outline" class="mb-2 w-100">
+        <mat-label>Search Product</mat-label>
+        <input matInput placeholder="Placeholder" [(ngModel)]="searchproduct" />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
       <mat-card
         class="mb-2 product-card"
         style="height: 400px"
         color="primary"
-        *ngFor="let product of products"
+        *ngFor="let product of products | searchFilter : searchproduct"
         (click)="selectedProductHandler(product.product_id)"
         [ngClass]="{ active: selectedProductId === product.product_id }"
       >
