@@ -1,0 +1,39 @@
+:host {
+  width: 100%;
+  display: flex;
+}
+
+.run {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1rem;
+}
+
+.title {
+  text-align: center;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.code-area {
+  max-width: 800px;
+  border: 1px solid #b6b4b4;
+  border-radius: 5px;
+  font-style: italic;
+}
+
+.submit-btn {
+  max-width: 200px;
+  border: 1px solid #b6b4b4;
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+.submit-btn:hover {
+  background-color: #fafafa;
+}

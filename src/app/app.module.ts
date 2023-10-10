@@ -31,30 +31,21 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MainComponent } from './main/main.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { GettingStartedComponent } from './getting-started/getting-started.component';
-import { ConfigureComponent } from './configure/configure.component';
-import { InboxComponent } from './inbox/inbox.component';
-import { SessionsComponent } from './sessions/sessions.component';
-import { AnalyticsComponent } from './analytics/analytics.component';
 import { IntegrationComponent } from './integration/integration.component';
-import { BillingComponent } from './billing/billing.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuardService } from './auth-guard.service';
 import { AuthorizationService } from './authorization.service';
 import { AuthInterceptorService } from './auth-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
-import { SavedQuestionnaireComponent } from './saved-questionnaire/saved-questionnaire.component';
 import { ChatDatePipe } from './pipes/chat-date.pipe';
-import { EmptyComponent } from './empty/empty.component';
-import { ProductsComponent } from './products/products.component';
 import { SessionsPipe } from './pipes/sessions.pipe';
 import { OrderbyDatePipe } from './pipes/orderby-date.pipe';
 import { DatePipe } from '@angular/common';
 import { ReversePipe } from './pipes/reverse.pipe';
-import { ShortcutsComponent } from './shortcuts/shortcuts.component';
 import { SearchFilterPipe } from './pipes/seach-filter.pipe';
+import { GenerateComponent } from './generate/generate.component';
+import { RunComponent } from './run/run.component';
+import { ScriptsComponent } from './scripts/scripts.component';
 
 const routes: Routes = [
   {
@@ -63,39 +54,25 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {
-        path: 'dashboard',
+        path: 'generate',
         canActivate: [AuthGuardService],
-        component: DashboardComponent,
+        component: GenerateComponent,
       },
       {
-        path: 'questionnaire/company',
+        path: 'run',
         canActivate: [AuthGuardService],
-        component: GettingStartedComponent,
+        component: RunComponent,
       },
       {
-        path: 'questionnaire/products',
+        path: 'scripts',
         canActivate: [AuthGuardService],
-        component: GettingStartedComponent,
+        component: ScriptsComponent,
       },
-      // { path: 'getting-started/shortcuts', canActivate: [ AuthGuardService ], component: ShortcutsComponent },
-      {
-        path: 'configure',
-        canActivate: [AuthGuardService],
-        component: ConfigureComponent,
-      },
-      // { path: 'inbox', canActivate: [ AuthGuardService ], component: InboxComponent },
-      {
-        path: 'sessions',
-        canActivate: [AuthGuardService],
-        component: SessionsComponent,
-      },
-      // { path: 'performance', canActivate: [ AuthGuardService ], component: AnalyticsComponent },
       {
         path: 'integration',
         canActivate: [AuthGuardService],
         component: IntegrationComponent,
       },
-      // { path: 'billing', canActivate: [ AuthGuardService ], component: BillingComponent },
       {
         path: 'profile',
         canActivate: [AuthGuardService],
@@ -106,11 +83,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'page-not-found', component: PageNotFoundComponent },
-  {
-    path: 'shopify/redirect',
-    canActivate: [AuthGuardService],
-    component: EmptyComponent,
-  },
   { path: '**', redirectTo: 'page-not-found' },
 ];
 
@@ -120,25 +92,11 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     MainComponent,
-    DashboardComponent,
-    GettingStartedComponent,
-    ConfigureComponent,
-    InboxComponent,
-    SessionsComponent,
-    AnalyticsComponent,
     IntegrationComponent,
-    BillingComponent,
     ProfileComponent,
-    QuestionnaireComponent,
-    SavedQuestionnaireComponent,
-    ChatDatePipe,
-    EmptyComponent,
-    ProductsComponent,
-    SessionsPipe,
-    OrderbyDatePipe,
-    ReversePipe,
-    ShortcutsComponent,
-    SearchFilterPipe,
+    GenerateComponent,
+    RunComponent,
+    ScriptsComponent,
   ],
   imports: [
     BrowserModule,

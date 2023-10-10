@@ -51,7 +51,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.router.url === '/') {
-      this.router.navigate(['/questionnaire/company']);
+      this.router.navigate(['/run']);
     }
   }
 
