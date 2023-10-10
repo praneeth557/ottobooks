@@ -98,6 +98,15 @@
       <a
         class="cm-nav-link"
         href="javascript:void(0)"
+        routerLink="/rules"
+        routerLinkActive="active"
+        (click)="isToggle = !isToggle"
+      >
+        <span class="cm-nav-title">Rules</span>
+      </a>
+      <a
+        class="cm-nav-link"
+        href="javascript:void(0)"
         routerLink="/integration"
         routerLinkActive="active"
         (click)="isToggle = !isToggle"

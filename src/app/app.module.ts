@@ -46,6 +46,7 @@ import { SearchFilterPipe } from './pipes/seach-filter.pipe';
 import { GenerateComponent } from './generate/generate.component';
 import { RunComponent } from './run/run.component';
 import { ScriptsComponent } from './scripts/scripts.component';
+import { RulesComponent } from './rules/rules.component';
 
 const routes: Routes = [
   {
@@ -67,6 +68,11 @@ const routes: Routes = [
         path: 'scripts',
         canActivate: [AuthGuardService],
         component: ScriptsComponent,
+      },
+      {
+        path: 'rules',
+        canActivate: [AuthGuardService],
+        component: RulesComponent,
       },
       {
         path: 'integration',
@@ -97,6 +103,7 @@ const routes: Routes = [
     GenerateComponent,
     RunComponent,
     ScriptsComponent,
+    RulesComponent,
   ],
   imports: [
     BrowserModule,
